@@ -1,0 +1,45 @@
+# --- Secrets (constitution, principe VI — NON NÉGOCIABLE) ---
+# Seul le fichier d'exemple sans valeurs réelles est versionné.
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+.secrets/
+credentials*.json
+service-account*.json
+
+# --- Réglages locaux de Claude Code (permissions propres à la machine) ---
+.claude/settings.local.json
+
+# --- Dépendances, builds et rapports générés ---
+node_modules/
+.venv/
+venv/
+__pycache__/
+dist/
+build/
+out/
+.next/
+.astro/
+.cache/
+coverage/
+playwright-report/
+test-results/
+
+# --- Journaux ---
+*.log
+logs/
+
+# --- Systèmes et éditeurs ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
