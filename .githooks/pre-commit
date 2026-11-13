@@ -1,0 +1,14 @@
+#!/bin/sh
+# Principe II (constitution) : bloque tout commit qui contient un secret.
+# Activé par `git config core.hooksPath .githooks` (refait par `npm install` via le script prepare).
+
+command -v gitleaks >/dev/null 2>&1 || {
+  echo "gitleaks est introuvable. Installez-le : brew install gitleaks (macOS) ou winget install Gitleaks.Gitleaks (Windows)."
+  exit 1
+}
+
+# Équivalent actuel de `gitleaks protect --staged` : analyse uniquement les changements indexés.
+gitleaks git --pre-commit --staged --redact --no-banner -v . || {
+  echo "gitleaks a détecté un secret dans les changements indexés : commit bloqué."
+  exit 1
+}
