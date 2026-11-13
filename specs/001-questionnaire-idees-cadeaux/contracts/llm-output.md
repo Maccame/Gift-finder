@@ -95,3 +95,4 @@ Jamais envoyés : IP, en-têtes du visiteur, identifiant de session, texte libre
 - `unknown-interest.json` : un `matchedInterestIds` absent des critères.
 - `refusal.json` : `stop_reason: "refusal"`.
 - `truncated.json` : `stop_reason: "max_tokens"`.
+- `long-description.json` : une description de 3 phrases, réduite à 2 par la validation.

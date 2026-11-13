@@ -55,6 +55,8 @@ inconnu est refusé.
 **Traitement, dans cet ordre**
 
 1. Valider la requête.
+   - 1 bis. Vérifier la limitation de débit (research R11) ; si refus → 429 `rate_limited`,
+     sans consommer de quota.
 2. Réserver une recherche dans les compteurs de quota (data-model §7) ; si refus → 429.
 3. Appeler le modèle avec les critères (voir [llm-output.md](./llm-output.md)), avec abandon à
    20 s.
@@ -94,6 +96,7 @@ Les étapes 6 et 7 ne peuvent pas modifier l'ordre fixé à l'étape 5 (FR-021, 
 | 400 | `{ "error": "invalid_criteria" }` | Requête invalide |
 | 422 | `{ "error": "no_valid_idea" }` | Le modèle a refusé ou aucune idée n'a passé la validation |
 | 429 | `{ "error": "quota_reached", "availableAgainAt": "…" }` | Quota journalier ou mensuel atteint |
+| 429 | `{ "error": "rate_limited" }` | Trop de requêtes en peu de temps ; aucun quota consommé |
 | 502 | `{ "error": "generation_failed" }` | Erreur du fournisseur ou réponse inexploitable |
 | 504 | `{ "error": "generation_timeout" }` | Plus de 20 s |
 
@@ -104,6 +107,8 @@ Comportement attendu de l'interface pour chaque statut : [data-model.md](../data
 - Une requête avec 4 centres d'intérêt, un identifiant inconnu ou un doublon renvoie 400 sans
   consommer de quota.
 - Avec le quota atteint, la réponse est 429 et le modèle simulé n'est pas appelé.
+- Avec la limitation de débit refusée, la réponse est 429 `rate_limited`, sans réservation de
+  quota ni appel au modèle.
 - Pour une même réponse simulée du modèle, l'ordre des `ideas` est identique avec et sans
   identifiant d'affiliation (SC-010).
 - Une sélection contient au plus 2 liens `affiliate: true` (SC-011).

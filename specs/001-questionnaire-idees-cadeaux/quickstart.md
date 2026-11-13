@@ -29,6 +29,7 @@ npx wrangler d1 migrations apply quota --local
 | `npm run check` | Types TypeScript et Astro |
 | `npm test` | Tests unitaires (Vitest), IA simulée |
 | `npm run test:e2e` | Tests de bout en bout et d'accessibilité (Playwright + axe), IA simulée |
+| `npm run test:all` | Lance tous les tests (unitaires puis bout en bout) : la commande unique du principe IV |
 | `npm run test:report` | Produit le compte rendu Markdown des tests, celui que la CI écrit dans la PR |
 
 ## Scénarios de validation

@@ -86,7 +86,9 @@ ensemble de `interestIds` (l'ordre de choix ne compte pas).
 | `links` | liste de `PurchaseLink` | Exactement 2 : Amazon puis Etsy (FR-020) |
 
 Les idées en double (même titre après normalisation) sont écartées ; seule la première est
-gardée.
+gardée. Une description de plus de 2 phrases est réduite à ses 2 premières phrases.
+
+Pendant US1, `links` est vide ; la règle « exactement 2 » s'applique à partir de US3.
 
 ## 5. PurchaseLink (lien d'achat)
 
@@ -132,8 +134,8 @@ Cette table ne contient **aucune** donnée liée à un visiteur.
 step1 → step2 → step3 → step4 ──(clic, statut ready)──▶ loading
   ▲ retour ◀──────────────────┘                          │
                                                          ├─ 200 ─▶ results
-                                                         ├─ 429 ─▶ quota_reached
-                                                         └─ 422/502/504/réseau ─▶ error
+                                                         ├─ 429 quota_reached ─▶ quota_reached
+                                                         └─ 422/429 rate_limited/502/504/réseau ─▶ error
 
 results ──(modification d'un critère)──▶ results_dirty
 results_dirty ──(clic valider, statut ready)──▶ loading
