@@ -1,0 +1,8 @@
+---
+// Racine : redirection 302 vers /fr/, /en/, /es/ ou /de/ selon Accept-Language, sans cookie.
+import { redirectToLocale } from "@/lib/locale-redirect";
+
+export const prerender = false;
+
+return redirectToLocale(Astro.request);
+---
