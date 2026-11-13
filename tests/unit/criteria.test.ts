@@ -96,3 +96,29 @@ describe("criteriaEqual", () => {
     expect(criteriaEqual(a, { ...a, interestIds: [...FIVE.slice(0, 4), "chess"] })).toBe(false);
   });
 });
+
+describe("getCriteriaStatus avec critères de référence (US2, FR-018)", () => {
+  const shown: Criteria = { locale: "fr", occasionId: "birthday", relationId: "friend", budgetId: "50_100", interestIds: FIVE };
+
+  it("unchanged quand le brouillon est égal aux critères affichés, quel que soit l'ordre", () => {
+    expect(getCriteriaStatus(draft(), [shown]).status).toBe("unchanged");
+    expect(getCriteriaStatus(draft({ interestIds: [...FIVE].reverse() }), [shown]).status).toBe("unchanged");
+  });
+
+  it("ready dès qu'un critère ou la langue diffère", () => {
+    expect(getCriteriaStatus(draft({ budgetId: "20_50" }), [shown]).status).toBe("ready");
+    expect(getCriteriaStatus(draft({ locale: "en" }), [shown]).status).toBe("ready");
+    expect(getCriteriaStatus(draft({ interestIds: [...FIVE, "chess"] }), [shown]).status).toBe("ready");
+  });
+
+  it("incomplete l'emporte sur unchanged sous 5 centres d'intérêt", () => {
+    const four = { ...shown, interestIds: FIVE.slice(0, 4) };
+    expect(getCriteriaStatus(draft({ interestIds: FIVE.slice(0, 4) }), [four]).status).toBe("incomplete");
+  });
+
+  it("unchanged aussi quand le brouillon est égal au deuxième critère de référence", () => {
+    const rejected = { ...shown, budgetId: "100_200" };
+    expect(getCriteriaStatus(draft({ budgetId: "100_200" }), [shown, rejected]).status).toBe("unchanged");
+    expect(getCriteriaStatus(draft({ budgetId: "100_200" }), [null, rejected]).status).toBe("unchanged");
+  });
+});

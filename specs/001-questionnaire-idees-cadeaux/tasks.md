@@ -151,7 +151,7 @@ valider (liste et compteur de requêtes inchangés, signal « critères modifié
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T053 [P] [US2] Compléter `tests/unit/criteria.test.ts` : `unchanged` quand le brouillon est égal aux critères affichés (y compris avec les centres d'intérêt dans un autre ordre), `ready` dès qu'un critère ou la locale diffère, `incomplete` prioritaire sur `unchanged` sous 5 centres d'intérêt ; `unchanged` aussi quand le brouillon est égal au deuxième critère de référence
+- [X] T053 [P] [US2] Compléter `tests/unit/criteria.test.ts` : `unchanged` quand le brouillon est égal aux critères affichés (y compris avec les centres d'intérêt dans un autre ordre), `ready` dès qu'un critère ou la locale diffère, `incomplete` prioritaire sur `unchanged` sous 5 centres d'intérêt ; `unchanged` aussi quand le brouillon est égal au deuxième critère de référence
 - [ ] T054 [P] [US2] Écrire `tests/e2e/us2-edit-criteria.spec.ts` : modifications sans validation = 0 requête et signal visible ; retour aux critères d'origine = signal masqué et bouton désactivé ; validation = 1 requête et liste remplacée ; moins de 5 centres d'intérêt = bouton désactivé avec « Encore {n} centre(s) d'intérêt » ; double clic sur « Mettre à jour » = 1 requête
 
 ### Implementation for User Story 2
