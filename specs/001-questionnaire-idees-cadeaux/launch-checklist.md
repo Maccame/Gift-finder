@@ -16,6 +16,14 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 - [ ] Éligibilité du repli serveur (`fallbacks`, bêta `server-side-fallback-2026-07-01`) confirmée, ou repli retiré du code (T075)
 - [ ] Exception de conservation (jusqu'à 2 ans pour les contenus signalés, ou imposée par la loi) documentée dans `plan.md` avec sa source (T075)
 - [ ] Liaison *Rate Limiting* du Worker vérifiée sur `workers.dev`, compteurs éphémères confirmés (T076)
+  - Code en place (`SUGGESTIONS_LIMITER`, 5 requêtes par 10 s, clé `CF-Connecting-IP` jamais écrite).
+  - Documentation [Rate Limiting](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/)
+    consultée le 2026-11-13 : compteurs locaux à chaque emplacement Cloudflare, cohérence éventuelle,
+    limite approximative. La page **ne dit pas** si la liaison fonctionne sur `workers.dev` ni si les
+    compteurs sont éphémères : à confirmer sur la prévisualisation (6 requêtes rapides → 429) et auprès
+    de Cloudflare.
+  - La page déconseille l'IP comme clé (IP partagées : un même réseau peut se voir limité). Choix à
+    confirmer par le porteur au regard du principe VIII (research R11).
 
 ## Prévisualisation
 

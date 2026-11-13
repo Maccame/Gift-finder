@@ -7,6 +7,7 @@
 declare namespace Cloudflare {
   interface Env {
     QUOTA_DB: D1Database;
+    SUGGESTIONS_LIMITER: RateLimit;
     ANTHROPIC_API_KEY: string;
     AMAZON_TAG_FR?: string;
     AMAZON_TAG_DE?: string;

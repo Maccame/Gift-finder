@@ -19,6 +19,8 @@ export interface SuggestionsDeps {
   now?: () => Date;
   /** Identifiant affilié Amazon du pays de la langue, s'il est configuré. */
   amazonTag?: (locale: Locale) => string | undefined;
+  /** Limitation de débit (research R11) : `false` si la requête doit être refusée. */
+  rateLimit?: (request: Request) => Promise<boolean>;
 }
 
 export async function handleSuggestions(request: Request, deps: SuggestionsDeps): Promise<Response> {
@@ -32,6 +34,9 @@ export async function handleSuggestions(request: Request, deps: SuggestionsDeps)
   const parsed = CriteriaSchema.safeParse(body);
   if (!parsed.success) return apiError("invalid_criteria", 400);
   const criteria = parsed.data;
+
+  // 1 bis. Limitation de débit, avant toute réservation de quota.
+  if (deps.rateLimit && !(await deps.rateLimit(request))) return apiError("rate_limited", 429);
 
   // 2. Réserver une recherche dans les compteurs de quota.
   const reservation = await reserve(deps.store, deps.limits, (deps.now ?? (() => new Date()))());
@@ -62,4 +67,9 @@ export const POST: APIRoute = ({ request }) =>
     limits: limitsFromEnv(env),
     generate: (criteria) => generateIdeas(criteria, { apiKey: env.ANTHROPIC_API_KEY }),
     amazonTag: (locale) => amazonTagFor(env, locale),
+    rateLimit: async (req) => {
+      // L'IP sert de clé le temps de l'appel, en mémoire ; elle n'est ni stockée ni journalisée.
+      const { success } = await env.SUGGESTIONS_LIMITER.limit({ key: req.headers.get("CF-Connecting-IP") ?? "local" });
+      return success;
+    },
   });

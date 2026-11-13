@@ -60,6 +60,32 @@ describe("POST /api/suggestions : requête invalide → 400 sans réservation", 
   });
 });
 
+describe("POST /api/suggestions : limitation de débit (R11)", () => {
+  it("refus → 429 rate_limited, sans réservation de quota ni appel au modèle", async () => {
+    const rateLimit = vi.fn(async () => false);
+    const d = deps({ rateLimit });
+    const response = await handleSuggestions(post(CRITERIA), d);
+    expect(response.status).toBe(429);
+    expect(await response.json()).toEqual({ error: "rate_limited" });
+    expect(rateLimit).toHaveBeenCalledTimes(1);
+    expect(d.store.runBatch).not.toHaveBeenCalled();
+    expect(d.generate).not.toHaveBeenCalled();
+    await expectCommonHeaders(response);
+  });
+
+  it("une requête invalide est refusée avant la limitation de débit", async () => {
+    const rateLimit = vi.fn(async () => true);
+    const response = await handleSuggestions(post({ ...CRITERIA, freeText: "x" }), deps({ rateLimit }));
+    expect(response.status).toBe(400);
+    expect(rateLimit).not.toHaveBeenCalled();
+  });
+
+  it("accord → la génération continue", async () => {
+    const response = await handleSuggestions(post(CRITERIA), deps({ rateLimit: async () => true }));
+    expect(response.status).toBe(200);
+  });
+});
+
 describe("POST /api/suggestions : quota", () => {
   it("quota journalier atteint → 429 quota_reached, modèle non appelé", async () => {
     const d = deps({ store: fakeStore("daily") });
