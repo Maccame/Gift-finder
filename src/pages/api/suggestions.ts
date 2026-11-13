@@ -6,8 +6,9 @@ import { CriteriaSchema } from "@/lib/criteria";
 import { generateIdeas, type GenerateResult } from "@/lib/generation/claude";
 import { validateIdeas } from "@/lib/generation/validate";
 import { apiError, json } from "@/lib/http";
+import { amazonTagFor, toSelectionBody } from "@/lib/links";
 import { d1QuotaStore, limitsFromEnv, reserve, type QuotaLimits, type QuotaStore } from "@/lib/quota";
-import type { Criteria, GiftIdea } from "@/lib/types";
+import type { Criteria, Locale } from "@/lib/types";
 
 export const prerender = false;
 
@@ -16,6 +17,8 @@ export interface SuggestionsDeps {
   limits: QuotaLimits;
   generate: (criteria: Criteria) => Promise<GenerateResult>;
   now?: () => Date;
+  /** Identifiant affilié Amazon du pays de la langue, s'il est configuré. */
+  amazonTag?: (locale: Locale) => string | undefined;
 }
 
 export async function handleSuggestions(request: Request, deps: SuggestionsDeps): Promise<Response> {
@@ -49,9 +52,8 @@ export async function handleSuggestions(request: Request, deps: SuggestionsDeps)
   const ranked = validateIdeas(result.raw, criteria);
   if (ranked.length === 0) return apiError("no_valid_idea", 422);
 
-  // Liens d'achat : ajoutés par US3 (T063). En attendant, `links` est vide.
-  const ideas: GiftIdea[] = ranked.map(({ searchQuery: _searchQuery, ...idea }) => ({ ...idea, links: [] }));
-  return json({ ideas, affiliateDisclosure: false });
+  // 6 et 7. Liens d'achat puis affiliation, sans toucher à l'ordre figé ; searchQuery est retiré.
+  return json(toSelectionBody(ranked, criteria.locale, deps.amazonTag?.(criteria.locale)));
 }
 
 export const POST: APIRoute = ({ request }) =>
@@ -59,4 +61,5 @@ export const POST: APIRoute = ({ request }) =>
     store: d1QuotaStore(env.QUOTA_DB),
     limits: limitsFromEnv(env),
     generate: (criteria) => generateIdeas(criteria, { apiKey: env.ANTHROPIC_API_KEY }),
+    amazonTag: (locale) => amazonTagFor(env, locale),
   });
