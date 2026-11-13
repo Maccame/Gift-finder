@@ -1,0 +1,10 @@
+[
+  { "id": "partner", "labels": { "fr": "Conjoint ou partenaire", "en": "Spouse or partner", "es": "Pareja", "de": "Partner oder Partnerin" } },
+  { "id": "parent", "labels": { "fr": "Parent", "en": "Parent", "es": "Padre o madre", "de": "Elternteil" } },
+  { "id": "child", "labels": { "fr": "Enfant", "en": "Child", "es": "Hijo o hija", "de": "Kind" } },
+  { "id": "sibling", "labels": { "fr": "Frère ou sœur", "en": "Brother or sister", "es": "Hermano o hermana", "de": "Bruder oder Schwester" } },
+  { "id": "grandparent", "labels": { "fr": "Grand-parent", "en": "Grandparent", "es": "Abuelo o abuela", "de": "Großelternteil" } },
+  { "id": "friend", "labels": { "fr": "Ami", "en": "Friend", "es": "Amigo", "de": "Freund oder Freundin" } },
+  { "id": "colleague", "labels": { "fr": "Collègue", "en": "Colleague", "es": "Compañero de trabajo", "de": "Kollege oder Kollegin" } },
+  { "id": "other", "labels": { "fr": "Autre relation", "en": "Other relationship", "es": "Otra relación", "de": "Andere Beziehung" } }
+]
