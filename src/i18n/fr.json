@@ -10,5 +10,11 @@
   "category.tech": "Technologie",
   "category.wellbeing": "Bien-être",
   "category.fashion_beauty": "Mode et beauté",
-  "category.home_deco": "Maison et déco"
+  "category.home_deco": "Maison et déco",
+  "site.title": "Idées cadeaux",
+  "site.tagline": "Répondez à 4 questions et trouvez une idée de cadeau en quelques minutes.",
+  "step.progress": "Étape {n} sur 4",
+  "action.next": "Suivant",
+  "action.back": "Retour",
+  "action.seeIdeas": "Voir les idées"
 }

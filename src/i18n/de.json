@@ -10,5 +10,11 @@
   "category.tech": "Technik",
   "category.wellbeing": "Wohlbefinden",
   "category.fashion_beauty": "Mode und Beauty",
-  "category.home_deco": "Wohnen und Deko"
+  "category.home_deco": "Wohnen und Deko",
+  "site.title": "Geschenkideen",
+  "site.tagline": "Beantworte 4 Fragen und finde in wenigen Minuten eine Geschenkidee.",
+  "step.progress": "Schritt {n} von 4",
+  "action.next": "Weiter",
+  "action.back": "Zurück",
+  "action.seeIdeas": "Ideen anzeigen"
 }

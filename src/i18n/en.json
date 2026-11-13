@@ -10,5 +10,11 @@
   "category.tech": "Technology",
   "category.wellbeing": "Wellbeing",
   "category.fashion_beauty": "Fashion and beauty",
-  "category.home_deco": "Home and decor"
+  "category.home_deco": "Home and decor",
+  "site.title": "Gift ideas",
+  "site.tagline": "Answer 4 questions and find a gift idea in minutes.",
+  "step.progress": "Step {n} of 4",
+  "action.next": "Next",
+  "action.back": "Back",
+  "action.seeIdeas": "See gift ideas"
 }
