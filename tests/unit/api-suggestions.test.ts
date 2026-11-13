@@ -82,10 +82,10 @@ describe("POST /api/suggestions : génération", () => {
     const response = await handleSuggestions(post(CRITERIA), d);
     expect(response.status).toBe(200);
     await expectCommonHeaders(response);
-    const body = await response.json();
+    const body = (await response.json()) as { ideas: Record<string, unknown>[]; affiliateDisclosure: boolean };
     expect(Object.keys(body).sort()).toEqual(["affiliateDisclosure", "ideas"]);
     expect(body.ideas).toHaveLength(6);
-    expect(body.ideas.map((i: { rank: number }) => i.rank)).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(body.ideas.map((i) => i.rank)).toEqual([1, 2, 3, 4, 5, 6]);
     for (const idea of body.ideas) {
       expect(Object.keys(idea).sort()).toEqual(["description", "links", "matchedInterestIds", "priceEur", "rank", "title"]);
     }
