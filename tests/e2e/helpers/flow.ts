@@ -32,7 +32,7 @@ export async function fillAll(page: Page, interests = FIVE_FR) {
 }
 
 export const seeIdeas = (page: Page) => page.getByRole("button", { name: "Voir les idées" });
-export const results = (page: Page) => page.getByRole("list", { name: "Idées cadeaux" }).getByRole("listitem");
+export const results = (page: Page) => page.getByRole("list", { name: "Idées cadeaux" }).locator(":scope > li");
 
 /** Attend que l'îlot GiftFinder soit hydraté (Astro retire l'attribut `ssr`). */
 export async function waitForApp(page: Page) {
