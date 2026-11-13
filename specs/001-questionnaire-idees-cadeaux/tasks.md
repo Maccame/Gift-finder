@@ -158,7 +158,7 @@ valider (liste et compteur de requêtes inchangés, signal « critères modifié
 
 - [X] T055 [P] [US2] Créer `src/components/CriteriaPanel.svelte` : sur la page des résultats, réutilise `OccasionStep`, `RelationStep`, `BudgetStep` et `InterestPicker` en version compacte pour modifier tous les critères sans changer d'écran (FR-015)
 - [X] T056 [P] [US2] Créer `src/components/StaleNotice.svelte` : message « Vos critères ont changé : mettez à jour pour voir de nouvelles idées », annoncé par `aria-live="polite"` (FR-017)
-- [ ] T057 [US2] Étendre `src/components/GiftFinder.svelte` : état `results_dirty`, transitions `results ↔ results_dirty` selon `criteriaEqual`, bouton « Mettre à jour les idées » désactivé si `unchanged`, `incomplete` ou `loading`, une validation = une requête qui remplace la sélection seulement en cas de succès (FR-016, FR-018, FR-019) ; ajouter les textes dans les 4 fichiers `src/i18n/`
+- [X] T057 [US2] Étendre `src/components/GiftFinder.svelte` : état `results_dirty`, transitions `results ↔ results_dirty` selon `criteriaEqual`, bouton « Mettre à jour les idées » désactivé si `unchanged`, `incomplete` ou `loading`, une validation = une requête qui remplace la sélection seulement en cas de succès (FR-016, FR-018, FR-019) ; ajouter les textes dans les 4 fichiers `src/i18n/`
 
 **Checkpoint**: US1 et US2 fonctionnent ensemble ; aucune génération sans clic
 

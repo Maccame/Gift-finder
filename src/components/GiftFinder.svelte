@@ -9,8 +9,10 @@
   import QuotaNotice from "./QuotaNotice.svelte";
   import ErrorNotice from "./ErrorNotice.svelte";
   import ResultsList from "./ResultsList.svelte";
+  import CriteriaPanel from "./CriteriaPanel.svelte";
+  import StaleNotice from "./StaleNotice.svelte";
   import { fetchStatus, requestSuggestions } from "@/lib/api-client";
-  import { emptyDraft, getCriteriaStatus, MAX_INTERESTS, toCriteria, type Draft } from "@/lib/criteria";
+  import { criteriaEqual, emptyDraft, getCriteriaStatus, MAX_INTERESTS, toCriteria, type Draft } from "@/lib/criteria";
   import { loadState, saveState, type Step } from "@/lib/session-state";
   import { createTranslator, type Messages } from "@/lib/translate";
   import type { ApiError, Criteria, Locale, Selection } from "@/lib/types";
@@ -44,6 +46,12 @@
 
   const status = $derived(getCriteriaStatus(draft, [selection?.criteria, lastRejected]));
   const canSubmit = $derived(status.status === "ready" && !loading);
+  /** État `results_dirty` : les critères affichés diffèrent de ceux de la sélection (FR-017). */
+  const dirty = $derived.by(() => {
+    if (!selection) return false;
+    const current = toCriteria(draft);
+    return !current || !criteriaEqual(current, selection.criteria);
+  });
 
   onMount(() => {
     const saved = loadState();
@@ -148,16 +156,36 @@
 
 <div class="gift-finder">
   {#if selection}
-    <section class="results" aria-labelledby="results-title">
-      <h2 id="results-title" tabindex="-1" bind:this={resultsHeading}>{t("results.title")}</h2>
-      {#if error}
-        <ErrorNotice {t} {error} onretry={retry} />
-      {/if}
-      {#if quotaLimited}
-        <QuotaNotice {t} {locale} availableAgainAt={quotaAgainAt} />
-      {/if}
-      <ResultsList {t} {locale} ideas={selection.ideas} />
-    </section>
+    <div class="results-layout">
+      <section class="results" aria-labelledby="results-title">
+        <h2 id="results-title" tabindex="-1" bind:this={resultsHeading}>{t("results.title")}</h2>
+        <StaleNotice {t} visible={dirty} />
+        {#if loading}
+          <p class="loading" role="status">{t("loading")}</p>
+        {/if}
+        {#if error}
+          <ErrorNotice {t} {error} onretry={retry} />
+        {/if}
+        <ResultsList {t} {locale} ideas={selection.ideas} />
+      </section>
+
+      <section class="criteria" aria-labelledby="criteria-title">
+        <h2 id="criteria-title">{t("criteria.title")}</h2>
+        <CriteriaPanel {t} {locale} {draft} onchange={update} onadd={addInterest} onremove={removeInterest} />
+        <div class="actions">
+          {#if quotaLimited}
+            <QuotaNotice {t} {locale} availableAgainAt={quotaAgainAt} />
+          {:else}
+            <button type="button" class="primary" disabled={!canSubmit} aria-describedby="criteria-status" onclick={submit}>
+              {t("action.update")}
+            </button>
+          {/if}
+        </div>
+        {#if !quotaLimited}
+          <CriteriaStatus {t} {status} tooMany={draft.interestIds.length > MAX_INTERESTS} />
+        {/if}
+      </section>
+    </div>
   {:else}
     <p class="progress">{t("step.progress", { n: step })}</p>
     <progress class="progress-bar" max="4" value={step} aria-label={t("progress.label")}></progress>
@@ -254,8 +282,22 @@
     margin: 0 0 0.75rem;
     font-size: 1.35rem;
   }
-  .results {
+  .results,
+  .criteria {
     display: grid;
     gap: 0.75rem;
+    align-content: start;
+  }
+  .criteria h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  .results-layout {
+    display: grid;
+    gap: 2rem;
+  }
+  .criteria {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
   }
 </style>
