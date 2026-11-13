@@ -1,6 +1,8 @@
 ---
 // Mise en page commune : aucune police ni script tiers (principes VIII et performance mobile).
+import { env } from "cloudflare:workers";
 import { t } from "@/lib/i18n";
+import { amazonTagFor } from "@/lib/links";
 import type { Locale } from "@/lib/types";
 
 interface Props {
@@ -10,6 +12,8 @@ interface Props {
 
 const { locale, title } = Astro.props;
 const siteTitle = t(locale, "site.title");
+// Mention légale Amazon Partenaires seulement si un identifiant est configuré pour ce pays (FR-023).
+const showAmazonNotice = amazonTagFor(env, locale) !== undefined;
 ---
 
 <!doctype html>
@@ -31,6 +35,7 @@ const siteTitle = t(locale, "site.title");
     </main>
     <footer class="site-footer">
       <slot name="footer" />
+      {showAmazonNotice && <p class="legal">{t(locale, "legal.amazon")}</p>}
     </footer>
   </body>
 </html>

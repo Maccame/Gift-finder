@@ -65,5 +65,6 @@
   "links.amazon": "Search on Amazon",
   "links.etsy": "Search on Etsy",
   "links.affiliate": "affiliate link",
-  "links.newTab": "(opens in a new tab)"
+  "links.newTab": "(opens in a new tab)",
+  "legal.amazon": "As an Amazon Associate I earn from qualifying purchases."
 }
