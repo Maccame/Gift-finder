@@ -16,5 +16,27 @@
     "test:all": "npm test && npm run test:e2e",
     "test:report": "node scripts/test-report.mjs",
     "prepare": "git config core.hooksPath .githooks"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "@astrojs/cloudflare": "^14.4.7",
+    "@astrojs/svelte": "^9.1.5",
+    "astro": "^7.4.11",
+    "svelte": "^5.57.3",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.0",
+    "@cloudflare/workers-types": "^5.20261113.1",
+    "@playwright/test": "^1.65.0",
+    "@vitest/coverage-v8": "^5.1.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.161.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261110.1": true
   }
 }
