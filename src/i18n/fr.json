@@ -58,5 +58,8 @@
   "results.matches": "Pour : {interests}",
   "results.title": "Vos idées cadeaux",
   "loading": "Recherche d'idées en cours…",
-  "progress.label": "Progression"
+  "progress.label": "Progression",
+  "stale.message": "Vos critères ont changé : mettez à jour pour voir de nouvelles idées.",
+  "criteria.title": "Vos critères",
+  "action.update": "Mettre à jour les idées"
 }

@@ -58,5 +58,8 @@
   "results.matches": "Passt zu: {interests}",
   "results.title": "Deine Geschenkideen",
   "loading": "Ideen werden gesucht…",
-  "progress.label": "Fortschritt"
+  "progress.label": "Fortschritt",
+  "stale.message": "Deine Angaben haben sich geändert: Aktualisiere, um neue Ideen zu sehen.",
+  "criteria.title": "Deine Angaben",
+  "action.update": "Ideen aktualisieren"
 }

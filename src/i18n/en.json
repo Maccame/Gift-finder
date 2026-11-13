@@ -58,5 +58,8 @@
   "results.matches": "Matches: {interests}",
   "results.title": "Your gift ideas",
   "loading": "Finding gift ideas…",
-  "progress.label": "Progress"
+  "progress.label": "Progress",
+  "stale.message": "Your criteria have changed: update to see new ideas.",
+  "criteria.title": "Your criteria",
+  "action.update": "Update ideas"
 }
