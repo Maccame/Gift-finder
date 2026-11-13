@@ -268,8 +268,7 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
   - Un modèle de PR (`.github/pull_request_template.md`) avec les cases de vérification de la
     constitution et la section du compte rendu des tests. Choix du porteur : GitHub.
 - **Justification** : principe I et workflow de développement de la constitution.
-- **Prérequis** : le dossier du projet n'est pas encore un dépôt git ; `git init` et la création
-  du dépôt GitHub sont les premières tâches.
+- **État** : le dépôt GitHub existe ; reste à protéger `main` (T013, `launch-checklist.md`).
 
 ## R16. Nom de domaine
 

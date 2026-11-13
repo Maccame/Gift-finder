@@ -24,10 +24,12 @@ Approche technique :
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.x (mode strict) ; Node.js 24 LTS pour l'outillage
+**Language/Version**: TypeScript (mode strict ; 6.0 installé) ; Node.js 24 LTS ou plus récent pour l'outillage (développement sous Node 26 LTS, CI sous Node 24)
 
 **Primary Dependencies**:
-- Astro (version stable courante) avec `@astrojs/cloudflare` et `@astrojs/svelte`
+- Astro (7.4 installé) avec `@astrojs/cloudflare` (14.4) et `@astrojs/svelte` ; avec cette version de
+  l'adaptateur, l'environnement du Worker se lit par `import { env } from "cloudflare:workers"`, et
+  les sessions Astro (cookie et KV) sont désactivées par `session: false`
 - Svelte 5
 - `@anthropic-ai/sdk`
 - Zod, pour la validation et la sortie structurée
@@ -72,11 +74,11 @@ Toutes les inconnues sont levées en phase 0 : voir [research.md](./research.md)
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-Constitution v2.1.0.
+Constitution v2.2.0 (la PR de la constitution est fusionnée et `main` est fusionnée dans la branche).
 
 | Principe | Vérification | Avant phase 0 | Après phase 1 |
 |---|---|---|---|
-| **I. Une branche par fonctionnalité** | Branche `001-questionnaire-idees-cadeaux` ; `main` protégée ; un commit par tâche ; fusion par PR uniquement | ⚠️ prérequis : le dossier n'est pas encore un dépôt git | ✅ prévu comme première tâche (research R15) |
+| **I. Une branche par fonctionnalité** | Branche `001-questionnaire-idees-cadeaux` ; `main` protégée ; un commit par tâche ; fusion par PR uniquement | ✅ dépôt GitHub en place | ✅ un commit par tâche ; protection de `main` à activer (T013, `launch-checklist.md`) |
 | **II. Aucun secret dans le dépôt** (non négociable) | Clés en secrets Cloudflare ; `.dev.vars` ignoré ; `.dev.vars.example` sans valeurs ; gitleaks en pré-commit et en CI | ✅ | ✅ (research R10) |
 | **III. Web first et multilingue** | Site responsive sans installation ; fr, en, es, de, avec fr par défaut ; langue dans l'URL ; textes et référentiel dans des fichiers de traduction ; test de complétude des clés ; idées générées dans la langue active | ✅ | ✅ (research R6, R7 ; data-model §1–2) |
 | **IV. Tests automatisés et compte rendu** (non négociable) | Vitest et Playwright sur chaque PR ; IA toujours simulée ; compte rendu (avec couverture) écrit dans la description de la PR ; fusion bloquée si un test échoue | ✅ | ✅ (research R9 ; quickstart V1–V8) |
@@ -85,15 +87,16 @@ Constitution v2.1.0.
 | **VII. Ergonomie ISO 9241-11** | Utilisateurs, objectifs et contexte décrits dans la spec ; SC-001 à SC-004 mesurés par un protocole de tests utilisateurs ; chaque erreur propose une action ; parcours au clavier et axe | ✅ | ✅ (research R14 ; [quickstart.md](./quickstart.md)) |
 | **VIII. Aucune donnée au-delà de la session** (non négociable) | Pas de cookie, `sessionStorage` uniquement ; D1 limité aux compteurs ; observabilité du Worker désactivée ; référentiel fermé, donc aucune donnée personnelle envoyée à l'IA | ✅ | ✅ avec 2 points à valider avant la mise en ligne (ci-dessous) |
 
-**Résultat** : aucune violation à justifier. Le prérequis du principe I (créer le dépôt git)
-est la première tâche.
+**Résultat** : aucune violation à justifier.
 
 **Points à vérifier avant l'ouverture au public** (non bloquants pour le développement ; suivis
 dans `launch-checklist.md`) :
 
-1. Anti-abus (research R11, tâche T076) : liaison *Rate Limiting* du Worker, compteurs
-   éphémères tenus par Cloudflare ; vérifier dans la documentation Cloudflare qu'elle fonctionne
-   sur `workers.dev` et ne persiste rien.
+1. Anti-abus (research R11, tâche T076) : liaison *Rate Limiting* du Worker en place. La
+   documentation Cloudflare (consultée le 2026-11-13) décrit des compteurs locaux à chaque
+   emplacement, à cohérence éventuelle, mais ne dit ni s'ils fonctionnent sur `workers.dev` ni
+   s'ils sont éphémères ; elle déconseille aussi l'IP comme clé. Points à confirmer sur la
+   prévisualisation (voir `launch-checklist.md`).
 2. Conservation par le fournisseur d'IA (research R12, tâche T075) : ZDR demandée à l'équipe
    commerciale d'Anthropic ; éligibilité du repli serveur à confirmer.
    **Exception documentée (principe VIII)** : même sous ZDR, Anthropic peut conserver jusqu'à
@@ -118,7 +121,8 @@ specs/001-questionnaire-idees-cadeaux/
 │   └── llm-output.md    # Échange serveur ↔ API Claude
 ├── checklists/
 │   └── requirements.md  # Contrôle qualité de la spec
-└── tasks.md             # Phase 2 (/speckit-tasks, pas encore créé)
+├── tasks.md             # Phase 2 : tâches (/speckit-tasks)
+└── launch-checklist.md  # Points à cocher avant l'ouverture au public (T013, T075 à T080)
 ```
 
 ### Source Code (repository root)
@@ -136,10 +140,19 @@ src/
 │   ├── steps/                      # OccasionStep, RelationStep, BudgetStep, InterestsStep
 │   ├── InterestPicker.svelte       # recherche et navigation par catégorie dans le référentiel
 │   ├── CriteriaStatus.svelte       # message des centres d'intérêt manquants (FR-010)
+│   ├── CriteriaPanel.svelte        # critères modifiables sur la page des résultats (FR-015)
+│   ├── StaleNotice.svelte          # signal « critères modifiés » (FR-017)
+│   ├── LanguageSwitcher.astro      # liens vers les 4 langues, sans cookie
 │   ├── ResultsList.svelte          # 6 idées, prix indicatif, liens, mention « lien affilié »
 │   ├── QuotaNotice.svelte          # message « service limité » à la place du bouton (FR-024)
 │   └── ErrorNotice.svelte          # erreur et bouton « Réessayer » (FR-025)
 ├── lib/
+│   ├── types.ts                    # types du data-model
+│   ├── http.ts                     # réponses JSON sans cache ni cookie
+│   ├── api-client.ts               # appels du navigateur vers /api/*
+│   ├── locale-redirect.ts          # choix de la langue de / selon Accept-Language
+│   ├── locales.ts                  # LOCALES, sans fichier de langue (utilisable côté navigateur)
+│   ├── translate.ts                # traduction et pluriels à partir des messages d'une langue
 │   ├── criteria.ts                 # getCriteriaStatus, égalité des critères
 │   ├── interests-search.ts         # normalisation et recherche dans le référentiel
 │   ├── session-state.ts            # lecture et écriture dans sessionStorage uniquement
@@ -157,9 +170,12 @@ src/
 
 migrations/0001_quota_counter.sql   # table quota_counter
 tests/
-├── unit/                           # criteria, search, validate, links, neutrality, quota, i18n
-├── e2e/                            # US1 à US4, clavier, axe
+├── unit/                           # criteria, search, validate, links, neutrality, quota, i18n…
+├── e2e/                            # US1 à US4, clavier, axe, confidentialité
 └── fixtures/llm/                   # réponses enregistrées du modèle (voir llm-output.md)
+
+scripts/test-report.mjs             # compte rendu des tests, écrit dans la PR par la CI
+.githooks/pre-commit                # gitleaks sur les changements indexés
 
 .github/
 ├── workflows/ci.yml                # check, test, test:e2e, gitleaks, compte rendu dans la PR
