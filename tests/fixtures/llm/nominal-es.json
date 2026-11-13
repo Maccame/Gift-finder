@@ -1,0 +1,13 @@
+{
+  "id": "msg_fixture",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-5-5",
+  "stop_reason": "end_turn",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"ideas\":[{\"title\":\"Pedal de efectos para guitarra\",\"description\":\"Un pedal de delay compacto para enriquecer su sonido. Ideal para un músico que toca en casa.\",\"priceEur\":69,\"matchedInterestIds\":[\"musician\"],\"searchQuery\":\"pedal delay guitarra\"},{\"title\":\"Mando inalámbrico ergonómico\",\"description\":\"Un mando cómodo para largas sesiones de juego. Compatible con PC y consolas.\",\"priceEur\":59,\"matchedInterestIds\":[\"gamer\"],\"searchQuery\":\"mando inalámbrico pc\"},{\"title\":\"Suscripción de flores de temporada\",\"description\":\"Tres ramos entregados a lo largo de las estaciones. Flores frescas todo el año.\",\"priceEur\":89,\"matchedInterestIds\":[\"flowers\"],\"searchQuery\":\"suscripción ramo de flores\"},{\"title\":\"Caja de especias del mundo\",\"description\":\"Doce especias poco comunes para variar sus recetas. Incluye un recetario.\",\"priceEur\":55,\"matchedInterestIds\":[\"cooking\"],\"searchQuery\":\"caja especias del mundo\"},{\"title\":\"Bastones de senderismo de carbono\",\"description\":\"Bastones ligeros y plegables para rutas largas. Caben fácilmente en la mochila.\",\"priceEur\":79,\"matchedInterestIds\":[\"hiking\"],\"searchQuery\":\"bastones senderismo carbono\"},{\"title\":\"Juego de mesa cooperativo de cocina\",\"description\":\"Un juego de mesa en el que se cocinan platos en equipo. Perfecto para una noche con amigos.\",\"priceEur\":52,\"matchedInterestIds\":[\"gamer\",\"cooking\"],\"searchQuery\":\"juego de mesa cocina cooperativo\"}]}"
+    }
+  ]
+}

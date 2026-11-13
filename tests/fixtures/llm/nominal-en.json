@@ -1,0 +1,13 @@
+{
+  "id": "msg_fixture",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-5-5",
+  "stop_reason": "end_turn",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"ideas\":[{\"title\":\"Guitar effects pedal\",\"description\":\"A compact delay pedal to enrich their sound. Ideal for a musician who plays at home.\",\"priceEur\":69,\"matchedInterestIds\":[\"musician\"],\"searchQuery\":\"guitar delay pedal\"},{\"title\":\"Ergonomic wireless controller\",\"description\":\"A comfortable controller for long gaming sessions. Works with PC and consoles.\",\"priceEur\":59,\"matchedInterestIds\":[\"gamer\"],\"searchQuery\":\"wireless pc controller\"},{\"title\":\"Seasonal flower subscription\",\"description\":\"Three bouquets delivered across the seasons. Fresh flowers all year round.\",\"priceEur\":89,\"matchedInterestIds\":[\"flowers\"],\"searchQuery\":\"flower bouquet subscription\"},{\"title\":\"World spice gift box\",\"description\":\"Twelve rare spices to vary their recipes. A recipe booklet is included.\",\"priceEur\":55,\"matchedInterestIds\":[\"cooking\"],\"searchQuery\":\"world spice gift set\"},{\"title\":\"Carbon hiking poles\",\"description\":\"Light, foldable poles for long hikes. They pack easily into a backpack.\",\"priceEur\":79,\"matchedInterestIds\":[\"hiking\"],\"searchQuery\":\"carbon hiking poles\"},{\"title\":\"Cooperative cooking board game\",\"description\":\"A board game where players cook dishes as a team. Perfect for an evening with friends.\",\"priceEur\":52,\"matchedInterestIds\":[\"gamer\",\"cooking\"],\"searchQuery\":\"cooperative cooking board game\"}]}"
+    }
+  ]
+}

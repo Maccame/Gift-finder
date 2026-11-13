@@ -1,0 +1,13 @@
+{
+  "id": "msg_fixture",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-5-5",
+  "stop_reason": "end_turn",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"ideas\":[{\"title\":\"Pédale d'effet pour guitare\",\"description\":\"Une pédale de delay compacte pour enrichir son son. Idéale pour un musicien qui joue chez lui.\",\"priceEur\":69,\"matchedInterestIds\":[\"musician\"],\"searchQuery\":\"pédale delay guitare\"},{\"title\":\"Manette sans fil ergonomique\",\"description\":\"Une manette confortable pour de longues sessions de jeu. Compatible avec PC et consoles.\",\"priceEur\":59,\"matchedInterestIds\":[\"gamer\"],\"searchQuery\":\"manette sans fil pc\"},{\"title\":\"Raquette de tennis\",\"description\":\"Une raquette légère pour débuter. Livrée avec sa housse.\",\"priceEur\":89,\"matchedInterestIds\":[\"tennis\"],\"searchQuery\":\"raquette de tennis\"},{\"title\":\"Abonnement de fleurs de saison\",\"description\":\"Trois bouquets livrés au fil des saisons. De quoi fleurir la maison toute l'année.\",\"priceEur\":89,\"matchedInterestIds\":[\"flowers\"],\"searchQuery\":\"abonnement bouquet de fleurs\"},{\"title\":\"Coffret d'épices du monde\",\"description\":\"Douze épices rares pour varier les recettes. Un livret de recettes est inclus.\",\"priceEur\":55,\"matchedInterestIds\":[\"cooking\"],\"searchQuery\":\"coffret épices du monde\"},{\"title\":\"Bâtons de randonnée en carbone\",\"description\":\"Des bâtons légers et pliables pour les longues sorties. Ils se rangent facilement dans un sac.\",\"priceEur\":79,\"matchedInterestIds\":[\"hiking\"],\"searchQuery\":\"bâtons randonnée carbone\"}]}"
+    }
+  ]
+}

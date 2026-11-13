@@ -1,0 +1,13 @@
+{
+  "id": "msg_fixture",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-5-5",
+  "stop_reason": "end_turn",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"ideas\":[{\"title\":\"Pédale d'effet pour guitare\",\"description\":\"Une pédale de delay compacte pour enrichir son son. Idéale pour un musicien qui joue chez lui.\",\"priceEur\":69,\"matchedInterestIds\":[\"musician\"],\"searchQuery\":\"pédale delay guitare\"},{\"title\":\"Porte-clés manette\",\"description\":\"Un petit porte-clés en forme de manette. Un clin d'œil amusant.\",\"priceEur\":35,\"matchedInterestIds\":[\"gamer\"],\"searchQuery\":\"porte-clés manette\"},{\"title\":\"Manette sans fil ergonomique\",\"description\":\"Une manette confortable pour de longues sessions de jeu. Compatible avec PC et consoles.\",\"priceEur\":59,\"matchedInterestIds\":[\"gamer\"],\"searchQuery\":\"manette sans fil pc\"},{\"title\":\"Robot cuiseur multifonction\",\"description\":\"Un robot qui cuit, mixe et pèse. Il remplace plusieurs appareils.\",\"priceEur\":150,\"matchedInterestIds\":[\"cooking\"],\"searchQuery\":\"robot cuiseur multifonction\"},{\"title\":\"Abonnement de fleurs de saison\",\"description\":\"Trois bouquets livrés au fil des saisons. De quoi fleurir la maison toute l'année.\",\"priceEur\":89,\"matchedInterestIds\":[\"flowers\"],\"searchQuery\":\"abonnement bouquet de fleurs\"},{\"title\":\"Coffret d'épices du monde\",\"description\":\"Douze épices rares pour varier les recettes. Un livret de recettes est inclus.\",\"priceEur\":55,\"matchedInterestIds\":[\"cooking\"],\"searchQuery\":\"coffret épices du monde\"}]}"
+    }
+  ]
+}

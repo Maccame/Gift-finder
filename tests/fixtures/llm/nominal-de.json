@@ -1,0 +1,13 @@
+{
+  "id": "msg_fixture",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-5-5",
+  "stop_reason": "end_turn",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"ideas\":[{\"title\":\"Effektpedal für Gitarre\",\"description\":\"Ein kompaktes Delay-Pedal für einen volleren Klang. Ideal für Musiker, die zu Hause spielen.\",\"priceEur\":69,\"matchedInterestIds\":[\"musician\"],\"searchQuery\":\"delay pedal gitarre\"},{\"title\":\"Ergonomischer kabelloser Controller\",\"description\":\"Ein bequemer Controller für lange Spielsessions. Funktioniert mit PC und Konsolen.\",\"priceEur\":59,\"matchedInterestIds\":[\"gamer\"],\"searchQuery\":\"kabelloser pc controller\"},{\"title\":\"Saisonales Blumen-Abo\",\"description\":\"Drei Sträuße, über die Jahreszeiten verteilt geliefert. Frische Blumen das ganze Jahr.\",\"priceEur\":89,\"matchedInterestIds\":[\"flowers\"],\"searchQuery\":\"blumenstrauß abo\"},{\"title\":\"Gewürzbox aus aller Welt\",\"description\":\"Zwölf seltene Gewürze für abwechslungsreiche Rezepte. Ein Rezeptheft liegt bei.\",\"priceEur\":55,\"matchedInterestIds\":[\"cooking\"],\"searchQuery\":\"gewürzbox welt\"},{\"title\":\"Wanderstöcke aus Carbon\",\"description\":\"Leichte, faltbare Stöcke für lange Touren. Sie passen problemlos in den Rucksack.\",\"priceEur\":79,\"matchedInterestIds\":[\"hiking\"],\"searchQuery\":\"wanderstöcke carbon\"},{\"title\":\"Kooperatives Koch-Brettspiel\",\"description\":\"Ein Brettspiel, in dem man im Team Gerichte zubereitet. Perfekt für einen Abend mit Freunden.\",\"priceEur\":52,\"matchedInterestIds\":[\"gamer\",\"cooking\"],\"searchQuery\":\"kooperatives brettspiel kochen\"}]}"
+    }
+  ]
+}
