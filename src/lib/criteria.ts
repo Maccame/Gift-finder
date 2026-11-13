@@ -4,7 +4,7 @@ import occasions from "@/data/occasions.json";
 import relations from "@/data/relations.json";
 import budgets from "@/data/budgets.json";
 import interests from "@/data/interests.json";
-import { LOCALES } from "./i18n";
+import { LOCALES } from "./locales";
 import type { Criteria, Locale } from "./types";
 
 export const MIN_INTERESTS = 5;
