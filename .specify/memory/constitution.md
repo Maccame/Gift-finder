@@ -1,39 +1,25 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 2.1.0 (MAJEURE : principes renumérotés et redéfinis)
-- Contexte : une v2.0.0 rédigée le 2026-11-11 sur une copie locale n'a jamais été fusionnée
-  dans `main`. Cette v2.1.0 fusionne la v1.0.0 de `main` et cette v2.0.0.
-- Principes renommés et renumérotés (ancien → nouveau) :
-  - I. Confidentialité par conception → VIII. Aucune donnée conservée au-delà de la session
-  - II. Neutralité des recommandations → VI. Idées cadeaux neutres vis-à-vis de l'affiliation
-  - III. Web-first et multilingue → III. Web first et multilingue
-  - IV. Ergonomie conforme ISO 9241-11 → VII. Ergonomie selon ISO 9241-11
-  - V. Tests automatisés et qualité vérifiable → IV. Tests automatisés et compte rendu avant
-    fusion
-  - VI. Secrets hors du dépôt → II. Aucun secret dans le dépôt
-  - VII. Maîtrise des coûts → V. Budget plafonné à 20 € par mois
-- Principes ajoutés :
-  - I. Une branche par fonctionnalité (auparavant dans le Workflow de développement)
-- Règles ajoutées par rapport à la v1.0.0 :
-  - III : pas de fusion tant que les 4 traductions ne sont pas complètes
-  - IV : test qui reproduit chaque bug corrigé ; services payants simulés dans les tests ;
-    une seule commande pour lancer les tests
-  - V : compteurs agrégés et anonymes autorisés pour faire respecter le budget
-  - VII : utilisateurs, objectifs et contexte décrits dans chaque spec, critères mesurables
-    pour l'efficacité, l'efficience et la satisfaction
-  - VIII : `localStorage` et IndexedDB interdits ; journaux de l'hébergeur désactivés (un cas
-    impossible doit être documenté et validé) ; limitation de débit en mémoire seulement ;
-    fournisseurs qui ne conservent ni ne réutilisent les données
-- Sections renommées : Contraintes techniques et budgétaires → Contraintes d'exploitation
-- Sections modifiées : Workflow de développement, Gouvernance
+- Version change: 2.1.0 → 2.2.0 (MINEURE : précision d'une règle existante, aucun principe
+  redéfini)
+- Principe modifié : VIII. Aucune donnée conservée au-delà de la session
+  - « ne pas conserver ni réutiliser » est précisé : au-delà du traitement de la requête
+    (ex. conservation zéro des données)
+  - nouvelle règle : seules les conservations qu'un fournisseur ne peut pas exclure par contrat
+    (obligation légale, contenus signalés par ses systèmes de sécurité) sont admises, documentées
+    dans le plan avec leur source et leur durée maximale, et sans donnée identifiante
+- Contexte : même sous ZDR, l'API Anthropic peut conserver jusqu'à 2 ans les contenus signalés
+  ou exigés par la loi (documentation « API et conservation des données », consultée le
+  2026-11-13) ; sans cette précision, aucun fournisseur ne pourrait satisfaire le principe VIII
+- Sections ajoutées : aucune
 - Sections supprimées : aucune
-- Interprétations à confirmer :
+- Interprétations à confirmer (reprises de la v2.1.0) :
   - V/VIII : les compteurs agrégés et anonymes (nombre d'appels, coût) ne sont pas des données
     utilisateur
-  - VIII : une règle anti-abus de l'hébergeur à compteurs éphémères vaut limitation « en
+  - VIII : une limitation de débit de l'hébergeur à compteurs éphémères vaut limitation « en
     mémoire, sans persistance »
-- Dépendants : `specs/001-questionnaire-idees-cadeaux/plan.md` (Constitution Check à
-  passer en v2.1.0) ; le compte rendu de tests du plan (research R9) doit ajouter la couverture
+- Dépendants : `specs/001-questionnaire-idees-cadeaux/plan.md` (Constitution Check à passer en
+  v2.2.0, exception d'Anthropic documentée) ; `research.md` R12 ; tâche T075
 - TODO différés : aucun
 -->
 
@@ -177,7 +163,12 @@ critères vérifiables.
   ni cookie.
 - Les paramètres envoyés à un service tiers (ex. API de génération) DOIVENT se limiter au strict
   nécessaire, sans donnée identifiante, et les fournisseurs retenus DOIVENT ne pas conserver
-  ni réutiliser ces données.
+  ni réutiliser ces données au-delà du traitement de la requête (ex. conservation zéro des
+  données).
+- Seules sont admises les conservations qu'un fournisseur ne peut pas exclure par contrat :
+  une obligation légale, ou des contenus signalés par ses systèmes de sécurité. Chacune DOIT
+  être documentée dans le plan, avec sa source et sa durée maximale, et les données envoyées
+  NE DOIVENT permettre d'identifier personne.
 - La limitation de débit par client, si elle est nécessaire, DOIT se faire en mémoire, sans
   persistance.
 
@@ -232,4 +223,4 @@ conformité RGPD est obtenue sans bannière de consentement.
 - Chaque revue de pull request DOIT vérifier le respect des principes I à VIII ; un écart non
   justifié bloque la fusion.
 
-**Version**: 2.1.0 | **Ratified**: 2026-11-06 | **Last Amended**: 2026-11-12
+**Version**: 2.2.0 | **Ratified**: 2026-11-06 | **Last Amended**: 2026-11-13
