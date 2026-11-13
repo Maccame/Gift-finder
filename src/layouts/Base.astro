@@ -1,0 +1,120 @@
+---
+// Mise en page commune : aucune police ni script tiers (principes VIII et performance mobile).
+import { t } from "@/lib/i18n";
+import type { Locale } from "@/lib/types";
+
+interface Props {
+  locale: Locale;
+  title?: string;
+}
+
+const { locale, title } = Astro.props;
+const siteTitle = t(locale, "site.title");
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>{title ? `${title} · ${siteTitle}` : siteTitle}</title>
+    <meta name="description" content={t(locale, "site.tagline")} />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-name" href={`/${locale}/`}>{siteTitle}</a>
+      <slot name="header" />
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <slot name="footer" />
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #ffffff;
+    --fg: #1d1d1f;
+    --muted: #55555c;
+    --accent: #a3184a;
+    --accent-fg: #ffffff;
+    --border: #c9c9cf;
+    --surface: #f5f4f2;
+    --danger: #a11a1a;
+    --focus: #1a5fb4;
+    --radius: 10px;
+    color-scheme: light;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161618;
+      --fg: #f2f2f4;
+      --muted: #b4b4bc;
+      --accent: #f07ba3;
+      --accent-fg: #161618;
+      --border: #4a4a52;
+      --surface: #222226;
+      --danger: #ff8a8a;
+      --focus: #8ab4ff;
+      color-scheme: dark;
+    }
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+  }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .site-header,
+  main,
+  .site-footer {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-name {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .site-footer {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  a {
+    color: var(--accent);
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
