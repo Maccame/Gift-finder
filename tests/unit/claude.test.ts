@@ -6,7 +6,7 @@ import { CRITERIA, fixture, fixtureOutput } from "./helpers";
 
 /** Client SDK simulé : aucun appel réseau. */
 function mockClient(impl: () => Promise<unknown>) {
-  const create = vi.fn(impl);
+  const create = vi.fn((_request: unknown) => impl());
   return { client: { beta: { messages: { create } } } as unknown as ClaudeClient, create };
 }
 
