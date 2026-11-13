@@ -202,7 +202,7 @@ critères et propose de valider (quickstart V1, V8)
 
 ### Tests for User Story 4 ⚠️
 
-- [ ] T066 [P] [US4] Écrire `tests/unit/locale-redirect.test.ts` : `pickLocale("de-DE,de;q=0.9,en;q=0.8") → "de"`, `pickLocale("pt-BR") → "fr"`, en-tête absent → `"fr"`, poids `q` respectés ; la réponse de `/` est une redirection 302 sans `Set-Cookie`
+- [X] T066 [P] [US4] Écrire `tests/unit/locale-redirect.test.ts` : `pickLocale("de-DE,de;q=0.9,en;q=0.8") → "de"`, `pickLocale("pt-BR") → "fr"`, en-tête absent → `"fr"`, poids `q` respectés ; la réponse de `/` est une redirection 302 sans `Set-Cookie`
 - [ ] T067 [P] [US4] Écrire `tests/e2e/us4-languages.spec.ts` : `/` sans `Accept-Language` reconnu → `/fr/` ; pour `/en/`, `/es/` et `/de/`, `<html lang>` correct, aucun texte français résiduel sur les 4 étapes et les résultats (fixtures `nominal-en`, `nominal-es`, `nominal-de`) ; changer de langue depuis les résultats conserve les critères, ne lance aucune requête et affiche le signal de T056 ; la requête suivante porte la nouvelle `locale`
 
 ### Implementation for User Story 4
