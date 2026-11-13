@@ -207,11 +207,29 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
   - La consigne système est fixe et versionnée dans `src/lib/generation/prompt.ts`.
 - **Justification** : avec un référentiel fermé (R7), les données envoyées ne permettent pas
   d'identifier quelqu'un. C'est l'application directe du principe VIII et de FR-030.
-- **À valider par le porteur avant la mise en ligne publique** : le principe VIII demande que
-  les fournisseurs ne conservent ni ne réutilisent les données. Il faut relire la politique de
-  conservation de l'API Anthropic et, si elle ne suffit pas, demander une conservation nulle
-  (zero data retention). Le risque est faible, puisque aucune donnée personnelle n'est
-  transmise.
+- **Conservation par le fournisseur** (principe VIII : les fournisseurs ne conservent ni ne
+  réutilisent les données). Source : [API et conservation des données](https://platform.claude.com/docs/fr/manage-claude/api-and-data-retention),
+  consultée le 2026-11-13.
+  - **Décision** : demander la conservation zéro des données (ZDR) à l'équipe commerciale
+    d'Anthropic (https://claude.com/contact-sales) pour l'organisation qui porte la clé de
+    production. La ZDR s'active par organisation. Avec elle, « Anthropic ne stocke pas les
+    prompts ou les réponses des clients au repos une fois la réponse de l'API renvoyée ».
+  - **Fonctionnalités utilisées, d'après le tableau d'éligibilité** :
+    - API Messages (`/v1/messages`) et effort : éligibles.
+    - Sorties structurées : « Oui (sous conditions) ». Les prompts et les réponses ne sont pas
+      stockés ; seul le JSON Schema est mis en cache, 24 h au plus après sa dernière
+      utilisation. Notre schéma ne contient aucune donnée de visiteur : il est fixe et
+      versionné.
+    - Prompt caching (piste de R4) : éligible.
+    - Repli serveur (`fallbacks`, bêta `server-side-fallback-2026-07-01`) : **absent du
+      tableau**. Son éligibilité, et celle du modèle de repli, sont à confirmer avec
+      l'équipe commerciale. Les modèles Fable et Mythos imposent une conservation de 30 jours.
+      Si le repli n'est pas couvert, le retirer : un refus donnera alors 422 `no_valid_idea`.
+  - **Exception connue** : même sous ZDR, Anthropic peut conserver jusqu'à 2 ans les entrées et
+    sorties signalées par ses systèmes de confiance et de sécurité, ou quand la loi l'exige.
+    Le risque est faible ici, puisque aucune donnée identifiante n'est transmise. Cette
+    exception est **à valider par le porteur** comme compatible avec le principe VIII.
+  - Tant que la ZDR n'est pas active, seul le développeur appelle l'API réelle (tâche T075).
 
 ## R13. Erreurs, délais et quota atteint
 
