@@ -1,0 +1,7 @@
+[
+  { "id": "under_20", "minEur": 0, "maxEur": 20, "labels": { "fr": "Moins de 20 €", "en": "Under €20", "es": "Menos de 20 €", "de": "Unter 20 €" } },
+  { "id": "20_50", "minEur": 20, "maxEur": 50, "labels": { "fr": "De 20 à 50 €", "en": "€20 to €50", "es": "De 20 a 50 €", "de": "20 bis 50 €" } },
+  { "id": "50_100", "minEur": 50, "maxEur": 100, "labels": { "fr": "De 50 à 100 €", "en": "€50 to €100", "es": "De 50 a 100 €", "de": "50 bis 100 €" } },
+  { "id": "100_200", "minEur": 100, "maxEur": 200, "labels": { "fr": "De 100 à 200 €", "en": "€100 to €200", "es": "De 100 a 200 €", "de": "100 bis 200 €" } },
+  { "id": "over_200", "minEur": 200, "maxEur": null, "labels": { "fr": "Plus de 200 €", "en": "Over €200", "es": "Más de 200 €", "de": "Über 200 €" } }
+]

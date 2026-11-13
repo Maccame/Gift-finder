@@ -1,0 +1,12 @@
+[
+  { "id": "christmas", "labels": { "fr": "Noël", "en": "Christmas", "es": "Navidad", "de": "Weihnachten" } },
+  { "id": "birthday", "labels": { "fr": "Anniversaire", "en": "Birthday", "es": "Cumpleaños", "de": "Geburtstag" } },
+  { "id": "valentines", "labels": { "fr": "Saint-Valentin", "en": "Valentine's Day", "es": "San Valentín", "de": "Valentinstag" } },
+  { "id": "mothers_day", "labels": { "fr": "Fête des mères", "en": "Mother's Day", "es": "Día de la Madre", "de": "Muttertag" } },
+  { "id": "fathers_day", "labels": { "fr": "Fête des pères", "en": "Father's Day", "es": "Día del Padre", "de": "Vatertag" } },
+  { "id": "wedding", "labels": { "fr": "Mariage", "en": "Wedding", "es": "Boda", "de": "Hochzeit" } },
+  { "id": "birth", "labels": { "fr": "Naissance", "en": "New baby", "es": "Nacimiento", "de": "Geburt" } },
+  { "id": "housewarming", "labels": { "fr": "Crémaillère", "en": "Housewarming", "es": "Inauguración de casa", "de": "Einweihungsfeier" } },
+  { "id": "thank_you", "labels": { "fr": "Remerciement", "en": "Thank you", "es": "Agradecimiento", "de": "Dankeschön" } },
+  { "id": "other", "labels": { "fr": "Autre occasion", "en": "Other occasion", "es": "Otra ocasión", "de": "Anderer Anlass" } }
+]
