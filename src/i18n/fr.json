@@ -61,5 +61,9 @@
   "progress.label": "Progression",
   "stale.message": "Vos critères ont changé : mettez à jour pour voir de nouvelles idées.",
   "criteria.title": "Vos critères",
-  "action.update": "Mettre à jour les idées"
+  "action.update": "Mettre à jour les idées",
+  "links.amazon": "Chercher sur Amazon",
+  "links.etsy": "Chercher sur Etsy",
+  "links.affiliate": "lien affilié",
+  "links.newTab": "(s'ouvre dans un nouvel onglet)"
 }

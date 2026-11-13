@@ -33,6 +33,26 @@
       <p class="description">{idea.description}</p>
       <p class="price">{t("results.price", { price: price(idea.priceEur) })}</p>
       <p class="matches">{t("results.matches", { interests: interestsOf(idea) })}</p>
+      {#if idea.links.length > 0}
+        <ul class="links">
+          {#each idea.links as link (link.merchant)}
+            <li>
+              <a
+                href={link.url}
+                target="_blank"
+                rel={link.affiliate ? "sponsored noopener noreferrer" : "noopener noreferrer"}
+                class="link-button"
+              >
+                {link.merchant === "amazon" ? t("links.amazon") : t("links.etsy")}
+                {#if link.affiliate}
+                  <span class="badge">{t("links.affiliate")}</span>
+                {/if}
+                <span class="visually-hidden">{t("links.newTab")}</span>
+              </a>
+            </li>
+          {/each}
+        </ul>
+      {/if}
     </li>
   {/each}
 </ol>
@@ -68,5 +88,38 @@
   .matches {
     color: var(--muted);
     font-size: 0.95rem;
+  }
+  .links {
+    list-style: none;
+    margin: 0.4rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 44px;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    color: var(--accent);
+    background: var(--bg);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .link-button:hover {
+    text-decoration: underline;
+  }
+  .badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--fg);
+    border: 1px solid var(--border);
   }
 </style>
