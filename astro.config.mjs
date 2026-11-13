@@ -18,7 +18,8 @@ export default defineConfig({
     defaultLocale: "fr",
     routing: {
       prefixDefaultLocale: true,
-      redirectToDefaultLocale: true,
+      // La racine / est gérée par src/pages/index.astro (Accept-Language, sans cookie, T068).
+      redirectToDefaultLocale: false,
     },
   },
 });

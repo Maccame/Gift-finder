@@ -1,0 +1,29 @@
+---
+// Page du questionnaire et des résultats, une par langue (/fr/, /en/, /es/, /de/).
+import Base from "@/layouts/Base.astro";
+import { isLocale, messagesFor, t } from "@/lib/i18n";
+import occasions from "@/data/occasions.json";
+import relations from "@/data/relations.json";
+import budgets from "@/data/budgets.json";
+import interests from "@/data/interests.json";
+
+export const prerender = false;
+
+const { locale } = Astro.params;
+if (!isLocale(locale)) {
+  return new Response(null, { status: 404 });
+}
+
+// Données transmises à l'îlot GiftFinder (T051) : référentiel et textes de la seule langue active.
+const islandProps = {
+  locale,
+  messages: messagesFor(locale),
+  reference: { occasions, relations, budgets, interests },
+};
+---
+
+<Base locale={locale}>
+  <h1>{t(locale, "site.title")}</h1>
+  <p>{t(locale, "site.tagline")}</p>
+  <div id="gift-finder" data-locale={islandProps.locale}></div>
+</Base>

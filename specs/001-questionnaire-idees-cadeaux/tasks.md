@@ -81,7 +81,7 @@ user stories
 - [X] T020 Créer `src/i18n/fr.json`, `en.json`, `es.json`, `de.json` (titre du site, étapes « Étape {n} sur 4 », boutons Suivant, Retour, Voir les idées, libellés des catégories) et `src/lib/i18n.ts` : constante `LOCALES`, `isLocale()`, `getLocaleFromUrl(url)` (`fr` par défaut), `t(locale, key, params?)` typée sur les clés de `fr.json` avec remplacement de `{param}`, et `label(entry, locale)` pour les données de référence ; une clé peut être plurielle (`{ "one": "…", "other": "…" }`), et `t()` choisit la forme avec `new Intl.PluralRules(locale).select(params.count)`
 - [X] T021 [P] Créer `src/lib/http.ts` : `json(body, status, init?)` qui renvoie une `Response` JSON UTF-8 avec `Cache-Control: no-store` et sans `Set-Cookie` ; `apiError(code, status, extra?)` pour les corps `{ "error": code, ... }` de [contracts/api.md](./contracts/api.md)
 - [X] T022 Créer `src/layouts/Base.astro` : `<html lang={locale}>`, métadonnées viewport, titre traduit, styles système (aucune police ni script tiers), zone `<main>` et `<footer>` avec un emplacement nommé `footer`
-- [ ] T023 Créer `src/pages/[locale]/index.astro` : renvoie 404 si `locale` n'est pas dans `LOCALES`, sinon rend `Base.astro` avec un conteneur pour l'îlot `GiftFinder` (créé en T050), en passant au client la locale, les données de référence et les textes de la langue
+- [X] T023 Créer `src/pages/[locale]/index.astro` : renvoie 404 si `locale` n'est pas dans `LOCALES`, sinon rend `Base.astro` avec un conteneur pour l'îlot `GiftFinder` (créé en T050), en passant au client la locale, les données de référence et les textes de la langue
 
 **Checkpoint**: `npm run check` et `npm test` passent, `/fr/` s'affiche, la CI tourne sur la PR et écrit le compte rendu
 
