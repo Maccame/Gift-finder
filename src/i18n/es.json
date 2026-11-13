@@ -66,5 +66,6 @@
   "links.etsy": "Buscar en Etsy",
   "links.affiliate": "enlace de afiliado",
   "links.newTab": "(se abre en una pestaña nueva)",
-  "legal.amazon": "En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables."
+  "legal.amazon": "En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.",
+  "language.label": "Idioma"
 }

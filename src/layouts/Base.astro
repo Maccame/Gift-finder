@@ -3,6 +3,7 @@
 import { env } from "cloudflare:workers";
 import { t } from "@/lib/i18n";
 import { amazonTagFor } from "@/lib/links";
+import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
 import type { Locale } from "@/lib/types";
 
 interface Props {
@@ -28,6 +29,7 @@ const showAmazonNotice = amazonTagFor(env, locale) !== undefined;
   <body>
     <header class="site-header">
       <a class="site-name" href={`/${locale}/`}>{siteTitle}</a>
+      <LanguageSwitcher locale={locale} />
       <slot name="header" />
     </header>
     <main id="main">

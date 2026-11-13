@@ -208,7 +208,7 @@ critères et propose de valider (quickstart V1, V8)
 ### Implementation for User Story 4
 
 - [X] T068 [US4] Créer `src/lib/locale-redirect.ts` (`pickLocale(acceptLanguage)`) et créer `src/pages/index.astro` pour rediriger en 302 vers `/{locale}/` selon `Accept-Language`, `fr` par défaut, sans cookie ; passer `redirectToDefaultLocale` à `false` dans `astro.config.mjs`
-- [ ] T069 [P] [US4] Créer `src/components/LanguageSwitcher.astro` : liens vers `/fr/`, `/en/`, `/es/`, `/de/` avec le nom de chaque langue dans sa propre langue, attributs `hreflang` et `lang`, `aria-current` sur la langue active ; l'intégrer dans l'en-tête de `src/layouts/Base.astro`
+- [X] T069 [P] [US4] Créer `src/components/LanguageSwitcher.astro` : liens vers `/fr/`, `/en/`, `/es/`, `/de/` avec le nom de chaque langue dans sa propre langue, attributs `hreflang` et `lang`, `aria-current` sur la langue active ; l'intégrer dans l'en-tête de `src/layouts/Base.astro`
 - [ ] T070 [US4] Dans `src/components/GiftFinder.svelte`, au chargement, si la sélection restaurée depuis `sessionStorage` a une `locale` différente de celle de l'URL, mettre à jour `draft.locale` et passer en `results_dirty` sans requête (FR-028) ; relire les traductions en, es et de de `src/i18n/` et `src/data/` pour qu'elles soient naturelles, pas littérales
 
 **Checkpoint**: toutes les user stories fonctionnent, dans les 4 langues
