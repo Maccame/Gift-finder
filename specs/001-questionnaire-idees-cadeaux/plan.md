@@ -59,6 +59,7 @@ Approche technique :
 - 4 langues complètes
 - Accessibilité WCAG AA (vérifiée par axe)
 - Au plus 2 liens affiliés, ajoutés après le classement
+- Limitation de débit : 5 requêtes par 10 s sur `/api/suggestions` (liaison du Worker)
 
 **Scale/Scope**:
 - 30 recherches par jour et 700 par mois au plus (quotas configurables)
@@ -87,14 +88,19 @@ Constitution v2.1.0.
 **Résultat** : aucune violation à justifier. Le prérequis du principe I (créer le dépôt git)
 est la première tâche.
 
-**Points à valider par le porteur avant la mise en ligne publique** (non bloquants pour le
-développement) :
+**Points à vérifier avant l'ouverture au public** (non bloquants pour le développement ; suivis
+dans `launch-checklist.md`) :
 
-1. Règle anti-abus Cloudflare (research R11) : les compteurs par IP de Cloudflare sont
-   éphémères et ne sont pas stockés par le site ; il faut confirmer qu'ils respectent le
-   principe VIII.
-2. Conservation par le fournisseur d'IA (research R12) : relire la politique de conservation de
-   l'API Anthropic, et demander une conservation nulle si elle ne satisfait pas le principe VIII.
+1. Anti-abus (research R11, tâche T076) : liaison *Rate Limiting* du Worker, compteurs
+   éphémères tenus par Cloudflare ; vérifier dans la documentation Cloudflare qu'elle fonctionne
+   sur `workers.dev` et ne persiste rien.
+2. Conservation par le fournisseur d'IA (research R12, tâche T075) : ZDR demandée à l'équipe
+   commerciale d'Anthropic ; éligibilité du repli serveur à confirmer.
+   **Exception documentée (principe VIII)** : même sous ZDR, Anthropic peut conserver jusqu'à
+   2 ans les entrées et sorties signalées par ses systèmes de sécurité, ou quand la loi l'exige
+   (source : documentation « API et conservation des données », consultée le 2026-11-13). Les
+   données envoyées (occasion, relation, tranche de budget, libellés du référentiel) ne
+   permettent d'identifier personne.
 
 ## Project Structure
 
@@ -160,7 +166,7 @@ tests/
 └── pull_request_template.md        # cases de la constitution et section du compte rendu
 .gitignore                          # inclut .dev.vars
 .dev.vars.example                   # noms des secrets, sans valeurs
-wrangler.jsonc                      # Worker, liaison D1, observabilité désactivée
+wrangler.jsonc                      # Worker, liaison D1, limitation de débit, observabilité désactivée
 astro.config.mjs                    # i18n (fr par défaut), adaptateur Cloudflare, Svelte
 ```
 

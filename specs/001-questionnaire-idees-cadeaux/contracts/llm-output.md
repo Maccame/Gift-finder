@@ -12,7 +12,7 @@ enregistrées (`tests/fixtures/llm/`).
 | Modèle | `claude-sonnet-5-5` |
 | Sortie structurée | `output_config.format` avec le schéma ci-dessous (Zod) |
 | Effort | `output_config.effort: "low"` |
-| Repli en cas de refus | `fallbacks: "default"`, bêta `server-side-fallback-2026-07-01` |
+| Repli en cas de refus | `fallbacks: "default"`, bêta `server-side-fallback-2026-07-01`, sous réserve de son éligibilité à la ZDR (research R12, tâche T075) |
 | `max_tokens` | 4 000 |
 | Délai maximal | 20 s (abandon de la requête) |
 | Nouvelles tentatives | 0 (`maxRetries: 0`) |

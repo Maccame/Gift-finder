@@ -228,7 +228,8 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
   - **Exception connue** : même sous ZDR, Anthropic peut conserver jusqu'à 2 ans les entrées et
     sorties signalées par ses systèmes de confiance et de sécurité, ou quand la loi l'exige.
     Le risque est faible ici, puisque aucune donnée identifiante n'est transmise. Cette
-    exception est **à valider par le porteur** comme compatible avec le principe VIII.
+    exception est admise par le principe VIII (constitution v2.2.0) et documentée dans le plan
+    (points à vérifier avant l'ouverture au public).
   - Tant que la ZDR n'est pas active, seul le développeur appelle l'API réelle (tâche T075).
 
 ## R13. Erreurs, délais et quota atteint

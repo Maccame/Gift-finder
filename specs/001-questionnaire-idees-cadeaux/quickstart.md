@@ -74,8 +74,15 @@ Vérifications complémentaires :
 
 ## Vérifications avant mise en ligne
 
-- `ANTHROPIC_API_KEY` posée avec `wrangler secret put`, absente du dépôt (gitleaks au vert).
-- Limite de dépense Anthropic à 17 $ par mois et alerte à 12 $ (research R4).
-- Observabilité du Worker désactivée dans `wrangler.jsonc`.
-- Points à valider par le porteur : règle anti-abus Cloudflare (research R11) et conservation des
-  données par Anthropic (research R12).
+Elles sont suivies dans `launch-checklist.md` (tâches T075 à T080) :
+
+- ZDR active chez Anthropic pour l'organisation de la clé de production, repli serveur confirmé
+  ou retiré, exception de conservation documentée dans le plan (research R12, T075).
+- Limitation de débit du Worker vérifiée (research R11, T076).
+- Prévisualisation (T077) :
+  - `ANTHROPIC_API_KEY` posée avec `wrangler secret put`, absente du dépôt (gitleaks au vert) ;
+  - limite de dépense Anthropic à 17 $ par mois et alerte à 12 $ ;
+  - observabilité du Worker désactivée.
+- Scénarios V1 à V9, et 95e percentile de SC-005 sous 10 s (T078).
+- Tests utilisateurs SC-001 à SC-004 (T079).
+- Ouverture publique seulement quand tout est coché (T080).

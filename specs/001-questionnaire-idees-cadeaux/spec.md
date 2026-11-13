@@ -173,6 +173,9 @@ dans la langue choisie.
   message expliquant la limite.
 - **Double clic sur le bouton des résultats ou de validation** : une seule génération est
   déclenchée ; le bouton est désactivé pendant le chargement.
+- **Demandes trop rapprochées** : si trop de demandes partent en peu de temps, le site affiche
+  « Trop de demandes, réessayez dans quelques secondes » avec un bouton « Réessayer » ; les
+  critères et la liste précédente sont conservés, et ce refus ne consomme pas le quota.
 - **Génération trop longue ou en échec** (réseau, service indisponible, au-delà de 20 secondes) :
   un message clair s'affiche avec un bouton « Réessayer », les critères sont conservés et la
   liste précédente reste visible s'il y en avait une.
