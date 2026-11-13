@@ -1,0 +1,7 @@
+# Copier en .dev.vars et remplir les valeurs. Ne JAMAIS commiter .dev.vars (principe II).
+# En production : npx wrangler secret put <NOM>
+ANTHROPIC_API_KEY=
+AMAZON_TAG_FR=
+AMAZON_TAG_DE=
+AMAZON_TAG_ES=
+AMAZON_TAG_UK=
