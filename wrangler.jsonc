@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gift-finder",
+  // Date alignée sur la version de workerd installée en local.
+  "compatibility_date": "2026-11-10",
+  "d1_databases": [
+    {
+      "binding": "QUOTA_DB",
+      "database_name": "quota",
+      // À remplir en T077 après `npx wrangler d1 create quota`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "QUOTA_DAILY": "30",
+    "QUOTA_MONTHLY": "700"
+  },
+  // Aucun journal de requêtes (principe VIII).
+  "observability": {
+    "enabled": false
+  }
+}
