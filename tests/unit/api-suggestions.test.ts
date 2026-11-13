@@ -76,6 +76,26 @@ describe("POST /api/suggestions : quota", () => {
   });
 });
 
+describe("POST /api/suggestions : liens d'achat (US3)", () => {
+  it("la réponse 200 contient 2 liens par idée, Amazon puis Etsy", async () => {
+    const body = (await (await handleSuggestions(post(CRITERIA), deps())).json()) as {
+      ideas: { links: { merchant: string }[] }[];
+      affiliateDisclosure: boolean;
+    };
+    for (const idea of body.ideas) expect(idea.links.map((l) => l.merchant)).toEqual(["amazon", "etsy"]);
+    expect(body.affiliateDisclosure).toBe(false);
+  });
+
+  it("avec AMAZON_TAG_FR défini, l'ordre des idées est identique à celui obtenu sans tag", async () => {
+    type Body = { ideas: { rank: number; title: string; links: { affiliate: boolean }[] }[]; affiliateDisclosure: boolean };
+    const plain = (await (await handleSuggestions(post(CRITERIA), deps())).json()) as Body;
+    const tagged = (await (await handleSuggestions(post(CRITERIA), deps({ amazonTag: () => "fr-21" }))).json()) as Body;
+    expect(tagged.ideas.map((i) => [i.rank, i.title])).toEqual(plain.ideas.map((i) => [i.rank, i.title]));
+    expect(tagged.ideas.flatMap((i) => i.links).filter((l) => l.affiliate)).toHaveLength(2);
+    expect(tagged.affiliateDisclosure).toBe(true);
+  });
+});
+
 describe("POST /api/suggestions : génération", () => {
   it("nominal-fr → 200 au format du contrat", async () => {
     const d = deps();

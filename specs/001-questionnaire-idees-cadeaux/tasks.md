@@ -177,7 +177,7 @@ identifiant (quickstart V6)
 
 - [X] T058 [P] [US3] Écrire `tests/unit/links.test.ts` : `fr → https://www.amazon.fr/s?k=`, `de → amazon.de`, `es → amazon.es`, `en → amazon.co.uk` ; Etsy `https://www.etsy.com/search?q=` ; requête encodée avec `URLSearchParams` (ex. « pédale delay guitare » → `p%C3%A9dale+delay+guitare`) ; `&tag=` seulement sur les liens Amazon des idées `rank` 1 et 2 et seulement si le tag du pays est défini et non vide ; exactement 2 liens par idée, Amazon puis Etsy
 - [X] T059 [P] [US3] Écrire `tests/unit/neutrality.test.ts` : pour chaque fixture `nominal-*` et `out-of-budget`, la liste des titres et des `rank` est strictement identique avec et sans les quatre `AMAZON_TAG_*` ; au plus 2 liens `affiliate: true` par sélection ; `affiliateDisclosure` vaut `true` si et seulement si un lien est affilié ; `buildLinks` ne modifie pas le tableau reçu (SC-010, SC-011)
-- [ ] T060 [P] [US3] Compléter `tests/unit/api-suggestions.test.ts` : la réponse 200 contient 2 liens par idée ; avec `AMAZON_TAG_FR` défini, l'ordre des idées est identique à celui obtenu sans tag
+- [X] T060 [P] [US3] Compléter `tests/unit/api-suggestions.test.ts` : la réponse 200 contient 2 liens par idée ; avec `AMAZON_TAG_FR` défini, l'ordre des idées est identique à celui obtenu sans tag
 - [ ] T061 [P] [US3] Écrire `tests/e2e/us3-links.spec.ts` : chaque idée a un lien Amazon et un lien Etsy avec `target="_blank"` et `rel="noopener noreferrer"` (plus `sponsored` si affilié) ; les liens affiliés portent la mention « lien affilié » ; sans affiliation, aucune mention n'apparaît
 
 ### Implementation for User Story 3
