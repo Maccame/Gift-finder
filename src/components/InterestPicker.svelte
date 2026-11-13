@@ -1,6 +1,7 @@
 <script lang="ts">
   // Choix des centres d'intérêt dans le référentiel uniquement (FR-006, FR-007) : recherche,
   // navigation par catégorie, puces retirables, ajout bloqué au-delà de 10.
+  import { tick } from "svelte";
   import { MAX_INTERESTS } from "@/lib/criteria";
   import { byCategory, interestById, searchInterests } from "@/lib/interests-search";
   import type { MessageKey, Translator } from "@/lib/translate";
@@ -20,15 +21,28 @@
 
   let query = $state("");
   let categoriesEl: HTMLElement | null = $state(null);
+  let searchInput: HTMLInputElement | null = $state(null);
 
   const results = $derived(searchInterests(query, locale, selected));
   const groups = $derived(byCategory(locale, selected));
   const full = $derived(selected.length >= MAX_INTERESTS);
   const label = (id: string) => interestById(id)?.labels[locale] ?? id;
 
+  /** Le bouton activé disparaît de la liste : le focus revient au champ de recherche. */
+  async function keepFocus() {
+    await tick();
+    if (!document.activeElement || document.activeElement === document.body) searchInput?.focus();
+  }
+
   function add(id: string) {
     if (full) return;
     onadd(id);
+    void keepFocus();
+  }
+
+  function remove(id: string) {
+    onremove(id);
+    void keepFocus();
   }
 
   function browse() {
@@ -48,6 +62,7 @@
       spellcheck="false"
       placeholder={t("interests.search.placeholder")}
       bind:value={query}
+      bind:this={searchInput}
       aria-describedby={full ? `${idPrefix}-max` : undefined}
     />
   </div>
@@ -83,7 +98,7 @@
         {#each selected as id (id)}
           <li class="chip">
             <span>{label(id)}</span>
-            <button type="button" aria-label={t("interests.remove", { label: label(id) })} onclick={() => onremove(id)}>
+            <button type="button" aria-label={t("interests.remove", { label: label(id) })} onclick={() => remove(id)}>
               <span aria-hidden="true">×</span>
             </button>
           </li>
