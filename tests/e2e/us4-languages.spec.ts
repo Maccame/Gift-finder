@@ -56,7 +56,7 @@ async function expectNoFrench(page: Page) {
 
 test.describe("US4 : langues (FR-026 à FR-028)", () => {
   test.describe("sans langue reconnue", () => {
-    test.use({ extraHTTPHeaders: { "Accept-Language": "pt-BR,pt;q=0.9" } });
+    test.use({ locale: "pt-BR" });
 
     test("/ redirige vers /fr/", async ({ page }) => {
       await mockApi(page);

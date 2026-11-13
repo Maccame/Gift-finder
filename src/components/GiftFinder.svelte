@@ -55,9 +55,11 @@
 
   onMount(() => {
     const saved = loadState();
-    if (saved && saved.draft.locale === locale) {
+    if (saved) {
       step = saved.step;
-      draft = saved.draft;
+      // Changement de langue (FR-028) : les critères sont gardés, la langue suit l'URL. Si une
+      // sélection est affichée, elle passe en `results_dirty` sans aucune requête.
+      draft = { ...saved.draft, locale };
       selection = saved.selection;
     }
     restored = true;

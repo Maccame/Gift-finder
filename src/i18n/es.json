@@ -35,8 +35,8 @@
   "interests.categories": "Todas las categorías",
   "interests.selected": "Intereses elegidos",
   "interests.count": {
-    "one": "{count} de 10 intereses elegido",
-    "other": "{count} de 10 intereses elegidos"
+    "one": "{count} interés elegido de 10",
+    "other": "{count} intereses elegidos de 10"
   },
   "interests.max": "Has elegido 10 intereses, el máximo. Quita uno para añadir otro.",
   "criteria.missingInterests": {
