@@ -33,3 +33,13 @@ export async function fillAll(page: Page, interests = FIVE_FR) {
 
 export const seeIdeas = (page: Page) => page.getByRole("button", { name: "Voir les idées" });
 export const results = (page: Page) => page.getByRole("list", { name: "Idées cadeaux" }).getByRole("listitem");
+
+/** Attend que l'îlot GiftFinder soit hydraté (Astro retire l'attribut `ssr`). */
+export async function waitForApp(page: Page) {
+  await page.locator("astro-island:not([ssr])").first().waitFor({ state: "attached" });
+}
+
+export async function openApp(page: Page, path = "/fr/") {
+  await page.goto(path);
+  await waitForApp(page);
+}

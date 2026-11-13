@@ -13,6 +13,8 @@ export default defineConfig({
   // Les sessions Astro posent un cookie et stockent des données en KV : interdit (principe VIII).
   session: false,
   integrations: [svelte()],
+  // Barre d'outils de développement désactivée : elle insère du contenu dans la page testée.
+  devToolbar: { enabled: false },
   i18n: {
     locales: ["fr", "en", "es", "de"],
     defaultLocale: "fr",
