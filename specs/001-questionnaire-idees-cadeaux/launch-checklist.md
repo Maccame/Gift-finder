@@ -6,7 +6,7 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 
 ## Dépôt
 
-- [ ] `main` protégée sur GitHub : fusion par PR uniquement, contrôles `ci` et `secrets` obligatoires, push direct interdit (T013)
+- [x] `main` protégée sur GitHub : fusion par PR uniquement, contrôles `ci` et `secrets` obligatoires, push direct interdit (T013)
 - [ ] « Automatically delete head branches » activé (T013)
 
 ## Fournisseurs
