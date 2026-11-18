@@ -14,7 +14,7 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 - [ ] ZDR demandée à Anthropic pour l'organisation de la clé de production — date de la demande : …… (T075)
 - [ ] Réponse d'Anthropic reçue — date : …… ; ZDR active depuis le : …… (T075)
 - [ ] Éligibilité du repli serveur (`fallbacks`, bêta `server-side-fallback-2026-07-01`) confirmée, ou repli retiré du code (T075)
-- [ ] Exception de conservation (jusqu'à 2 ans pour les contenus signalés, ou imposée par la loi) documentée dans `plan.md` avec sa source (T075)
+- [x] Exception de conservation (jusqu'à 2 ans pour les contenus signalés, ou imposée par la loi) documentée dans `plan.md` avec sa source (T075)
 - [ ] Liaison *Rate Limiting* du Worker vérifiée sur `workers.dev`, compteurs éphémères confirmés (T076)
   - Code en place (`SUGGESTIONS_LIMITER`, 5 requêtes par 10 s, clé `CF-Connecting-IP` jamais écrite).
   - Documentation [Rate Limiting](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/)
