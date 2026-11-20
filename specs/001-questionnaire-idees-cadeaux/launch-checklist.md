@@ -36,10 +36,10 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 
 ## Validation
 
-- [ ] Scénarios V1 à V8 de `quickstart.md` en local (T078)
-- [ ] Essai V9 : une recherche réelle par langue (T078)
+- [x] Scénarios V1 à V8 de `quickstart.md` en local le 2026-11-20 : `npm run check` sans erreur, `npm run test:all` 181 tests unitaires et 92 de bout en bout réussis, 0 échec (T078)
+- [x] Essai V9 sur la prévisualisation le 2026-11-20 : une recherche par langue, 6 idées chaque fois, dans la bonne langue, prix dans la tranche, liens amazon.fr / amazon.co.uk / amazon.es / amazon.de et Etsy, réponses en 5,5 à 7,6 s (T078)
 - [ ] SC-005 : 20 recherches réelles, 95e percentile < 10 s — mesure : …… (T078)
-- [ ] Prompt caching : taille de la consigne mesurée, activé seulement au-delà du minimum cachable (T078)
+- [x] Prompt caching : consigne système mesurée à environ 410 tokens (`count_tokens`, `claude-sonnet-5-5`, 2026-11-20), sous le minimum cachable de 512 tokens : **non activé** (T078, research R4)
 - [ ] Tests utilisateurs SC-001 à SC-004 consignés dans `usability-results.md` (T079)
 
 ## Ouverture
