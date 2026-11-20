@@ -83,6 +83,9 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
   jour) ; aucune limite côté Anthropic (une erreur de comptage pourrait dépasser le budget).
 - **Piste d'économie** : mettre en cache la consigne fixe (prompt caching) si elle dépasse la
   taille minimale cachable ; à mesurer une fois la consigne écrite.
+  - *Mesure (2026-11-20, T078)* : environ 410 tokens pour la consigne système (`count_tokens`
+    sur `claude-sonnet-5-5`), sous le minimum cachable de 512 tokens de ce modèle : le cache ne
+    s'appliquerait pas, il n'est donc pas activé. À revoir si la consigne grossit.
 
 ## R5. Stockage du compteur de quota
 
