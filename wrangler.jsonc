@@ -7,8 +7,8 @@
     {
       "binding": "QUOTA_DB",
       "database_name": "quota",
-      // À remplir en T077 après `npx wrangler d1 create quota`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Base créée en T077 (`npx wrangler d1 create quota`).
+      "database_id": "f161adc3-0925-4dc6-aba5-c4ca684aa930",
       "migrations_dir": "migrations"
     }
   ],
