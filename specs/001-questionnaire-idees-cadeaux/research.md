@@ -183,12 +183,32 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
     10 secondes. Sa clé est l'IP du visiteur, gardée en mémoire le temps de la requête et
     jamais écrite. Au-delà, l'API répond 429 `rate_limited` sans consommer de quota.
   - Une fois le domaine acheté et géré par Cloudflare (R16), une règle de limitation de débit
-    au niveau du domaine (offre gratuite : 1 règle) peut s'y ajouter : les règles de ce type
+    au niveau du domaine (offre gratuite : 1 règle) s'y ajoute, obligatoire avant l'ouverture
+    publique (décision du 2026-11-20 ci-dessous) : les règles de ce type
     s'appliquent à un domaine, pas à une adresse `workers.dev`.
   - Les compteurs sont tenus par Cloudflare, en mémoire et de façon éphémère ; le site ne
     stocke aucune IP. Ce fonctionnement est à confirmer dans la documentation Cloudflare
     (tâche T076).
   - En complément, le quota journalier (R4) borne la dépense quoi qu'il arrive.
+- **Vérification sur la prévisualisation (2026-11-20, T076)** :
+  - Essai 1 : 6 requêtes valides simultanées → 6 réponses 200, aucun 429.
+  - Essai 2 : 7 requêtes valides envoyées à 1 s d'intervalle → 7 réponses 200, aucun 429.
+  - Le quota, lui, a compté les 13 recherches (compteurs D1 relus).
+  - Documentation [Rate Limiting](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/)
+    relue le 2026-11-20 : « The Rate Limiting API provides an approximate limit », locale à
+    chaque emplacement, et des requêtes peuvent dépasser la limite avant la mise à jour des
+    compteurs ; pour une limite stricte, Cloudflare recommande les Durable Objects. La page ne
+    dit toujours rien de `workers.dev`.
+  - **Conclusion** : sur `workers.dev`, la liaison n'empêche pas une rafale ; elle n'est qu'une
+    protection partielle, au mieux.
+- **Décision du porteur (2026-11-20)** :
+  - Tant que l'URL `workers.dev` n'est pas diffusée : la liaison est conservée telle quelle
+    (protection partielle acceptée) ; la dépense reste bornée par le quota journalier et le
+    crédit prépayé.
+  - **Avant l'ouverture publique** : le domaine est acheté (R16) et la règle de limitation de
+    débit au niveau du domaine est en place ; elle devient un prérequis bloquant de T080.
+  - Limite stricte par Durable Object (option écartée pour l'instant) : à reconsidérer
+    seulement si le site doit ouvrir au public avant l'achat du domaine.
 - **Justification** : la règle empêche un robot de vider le quota journalier en quelques
   secondes au détriment des vrais visiteurs. Le principe VIII autorise une limitation de débit
   en mémoire, sans persistance.

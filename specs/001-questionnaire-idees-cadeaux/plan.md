@@ -92,11 +92,11 @@ Constitution v3.0.0 (la PR de la constitution est fusionnée et `main` est fusio
 **Points à vérifier avant l'ouverture au public** (non bloquants pour le développement ; suivis
 dans `launch-checklist.md`) :
 
-1. Anti-abus (research R11, tâche T076) : liaison *Rate Limiting* du Worker en place. La
-   documentation Cloudflare (consultée le 2026-11-13) décrit des compteurs locaux à chaque
-   emplacement, à cohérence éventuelle, mais ne dit ni s'ils fonctionnent sur `workers.dev` ni
-   s'ils sont éphémères ; elle déconseille aussi l'IP comme clé. Points à confirmer sur la
-   prévisualisation (voir `launch-checklist.md`).
+1. Anti-abus (research R11, tâche T076) : la liaison *Rate Limiting* du Worker, vérifiée le
+   2026-11-20, ne bloque pas une rafale sur `workers.dev` (limite approximative). Décision du
+   porteur : protection partielle acceptée tant que l'URL n'est pas diffusée, la dépense restant
+   bornée par le quota journalier ; l'ouverture publique exige le domaine (R16) et sa règle de
+   limitation de débit (T080).
 2. Conservation par le fournisseur d'IA (research R12, tâche T075) : la ZDR n'est plus exigée
    (constitution v3.0.0). Sans ZDR, « Anthropic supprime automatiquement les entrées et sorties
    dans les 30 jours suivant leur réception ou leur génération », ce qui respecte la limite d'un
