@@ -207,10 +207,19 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
   - La consigne système est fixe et versionnée dans `src/lib/generation/prompt.ts`.
 - **Justification** : avec un référentiel fermé (R7), les données envoyées ne permettent pas
   d'identifier quelqu'un. C'est l'application directe du principe VIII et de FR-030.
-- **Conservation par le fournisseur** (principe VIII : les fournisseurs ne conservent ni ne
-  réutilisent les données). Source : [API et conservation des données](https://platform.claude.com/docs/fr/manage-claude/api-and-data-retention),
-  consultée le 2026-11-13.
-  - **Décision** : demander la conservation zéro des données (ZDR) à l'équipe commerciale
+- **Conservation par le fournisseur** (principe VIII v3.0.0 : les fournisseurs conservent les
+  données un mois au plus et ne les réutilisent pas à leurs propres fins). Sources :
+  [API et conservation des données](https://platform.claude.com/docs/fr/manage-claude/api-and-data-retention),
+  consultée le 2026-11-13, et [politique de conservation des données commerciales](https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data),
+  consultée le 2026-11-20.
+  - **Décision (2026-11-20)** : la ZDR n'est plus demandée. La conservation standard suffit :
+    « For Anthropic API users, we automatically delete inputs and outputs on our backend within
+    30 days of receipt or generation. » Elle respecte la limite d'un mois de la constitution
+    v3.0.0, y compris pour le repli serveur et les modèles Fable et Mythos (30 jours). Le repli
+    serveur reste donc en place. Reste à confirmer dans les conditions commerciales que les
+    données de l'API ne servent pas à entraîner les modèles (T075).
+  - *Historique (constitution v2.2.0, abandonné)* :
+  - Décision initiale : demander la conservation zéro des données (ZDR) à l'équipe commerciale
     d'Anthropic (https://claude.com/contact-sales) pour l'organisation qui porte la clé de
     production. La ZDR s'active par organisation. Avec elle, « Anthropic ne stocke pas les
     prompts ou les réponses des clients au repos une fois la réponse de l'API renvoyée ».
@@ -225,12 +234,12 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
       tableau**. Son éligibilité, et celle du modèle de repli, sont à confirmer avec
       l'équipe commerciale. Les modèles Fable et Mythos imposent une conservation de 30 jours.
       Si le repli n'est pas couvert, le retirer : un refus donnera alors 422 `no_valid_idea`.
-  - **Exception connue** : même sous ZDR, Anthropic peut conserver jusqu'à 2 ans les entrées et
-    sorties signalées par ses systèmes de confiance et de sécurité, ou quand la loi l'exige.
-    Le risque est faible ici, puisque aucune donnée identifiante n'est transmise. Cette
-    exception est admise par le principe VIII (constitution v2.2.0) et documentée dans le plan
-    (points à vérifier avant l'ouverture au public).
-  - Tant que la ZDR n'est pas active, seul le développeur appelle l'API réelle (tâche T075).
+  - **Exception connue** : Anthropic peut conserver jusqu'à 2 ans les entrées et sorties
+    signalées par ses systèmes de confiance et de sécurité (7 ans pour les scores de
+    classification), ou quand la loi l'exige. Le risque est faible ici, puisque aucune donnée
+    identifiante n'est transmise. Cette exception est admise par le principe VIII (constitution
+    v3.0.0) et documentée dans le plan (points à vérifier avant l'ouverture au public).
+  - Tant que T075 n'est pas terminée, seul le développeur appelle l'API réelle.
 
 ## R13. Erreurs, délais et quota atteint
 

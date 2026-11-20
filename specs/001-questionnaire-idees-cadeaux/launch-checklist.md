@@ -11,9 +11,8 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 
 ## Fournisseurs
 
-- [ ] ZDR demandée à Anthropic pour l'organisation de la clé de production — date de la demande : …… (T075)
-- [ ] Réponse d'Anthropic reçue — date : …… ; ZDR active depuis le : …… (T075)
-- [ ] Éligibilité du repli serveur (`fallbacks`, bêta `server-side-fallback-2026-07-01`) confirmée, ou repli retiré du code (T075)
+- [x] ZDR abandonnée (constitution v3.0.0) : conservation standard d'Anthropic de 30 jours au plus, conforme à la limite d'un mois, repli serveur compris — source consultée le 2026-11-20 (T075)
+- [ ] Conditions commerciales d'Anthropic relues : les données de l'API ne servent pas à entraîner les modèles ni à d'autres fins propres au fournisseur — date : …… (T075)
 - [x] Exception de conservation (jusqu'à 2 ans pour les contenus signalés, ou imposée par la loi) documentée dans `plan.md` avec sa source (T075)
 - [ ] Liaison *Rate Limiting* du Worker vérifiée sur `workers.dev`, compteurs éphémères confirmés (T076)
   - Code en place (`SUGGESTIONS_LIMITER`, 5 requêtes par 10 s, clé `CF-Connecting-IP` jamais écrite).
@@ -23,7 +22,8 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
     compteurs sont éphémères : à confirmer sur la prévisualisation (6 requêtes rapides → 429) et auprès
     de Cloudflare.
   - La page déconseille l'IP comme clé (IP partagées : un même réseau peut se voir limité). Choix à
-    confirmer par le porteur au regard du principe VIII (research R11).
+    confirmer par le porteur ; le principe VIII v3.0.0 admet une conservation d'un mois au plus, donc
+    des compteurs non éphémères restent conformes s'ils expirent sous 31 jours (research R11).
 
 ## Prévisualisation
 

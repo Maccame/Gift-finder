@@ -156,8 +156,10 @@ quota_reached : la saisie reste possible, le bouton est remplacé par le message
 | Critères, sélection, étape courante | Mémoire de l'îlot, copie dans `sessionStorage` | Jusqu'à la fermeture de l'onglet (FR-029) |
 | Langue | URL (`/fr/`, `/en/`…) | Aucune conservation |
 | Compteurs de quota | D1 `quota_counter` | Une ligne par jour et par mois, sans donnée de visiteur |
-| Critères envoyés à l'IA | Requête vers l'API Anthropic | Le temps de l'appel côté site ; conservation par le fournisseur à vérifier (research R12) |
+| Critères envoyés à l'IA | Requête vers l'API Anthropic | Le temps de l'appel côté site ; 30 jours au plus chez Anthropic, hors exceptions documentées (research R12) |
 | Données de référence, textes | Fichiers versionnés | Permanente (aucune donnée de visiteur) |
 
-Interdits : cookies, `localStorage`, IndexedDB, journaux de requêtes, outils d'analytics
-(principe VIII).
+Interdits par la constitution : cookies, `localStorage`, IndexedDB, outils d'analytics et
+traceurs tiers (principe VIII). La constitution v3.0.0 autorise une conservation côté serveur
+d'un mois au plus, mais cette fonctionnalité n'en a pas besoin : elle n'écrit aucun journal de
+requêtes et ne conserve aucune donnée de visiteur (FR-029).

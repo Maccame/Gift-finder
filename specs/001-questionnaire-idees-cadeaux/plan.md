@@ -74,7 +74,7 @@ Toutes les inconnues sont levées en phase 0 : voir [research.md](./research.md)
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-Constitution v2.2.0 (la PR de la constitution est fusionnée et `main` est fusionnée dans la branche).
+Constitution v3.0.0 (la PR de la constitution est fusionnée et `main` est fusionnée dans la branche).
 
 | Principe | Vérification | Avant phase 0 | Après phase 1 |
 |---|---|---|---|
@@ -85,7 +85,7 @@ Constitution v2.2.0 (la PR de la constitution est fusionnée et `main` est fusio
 | **V. Budget plafonné à 20 €** | Estimation pessimiste de 16,20 € par mois au plus ; quotas journalier et mensuel vérifiés avant chaque appel payant ; message sur place quand ils sont atteints ; limite de dépense côté Anthropic | ✅ | ✅ (research R4, R5, R13) |
 | **VI. Neutralité de l'affiliation** | L'IA ignore l'affiliation ; ordre figé avant l'ajout des liens ; au plus 2 liens affiliés, signalés ; mention légale ; test de neutralité | ✅ | ✅ (research R8 ; [api.md](./contracts/api.md) étapes 5–7) |
 | **VII. Ergonomie ISO 9241-11** | Utilisateurs, objectifs et contexte décrits dans la spec ; SC-001 à SC-004 mesurés par un protocole de tests utilisateurs ; chaque erreur propose une action ; parcours au clavier et axe | ✅ | ✅ (research R14 ; [quickstart.md](./quickstart.md)) |
-| **VIII. Aucune donnée au-delà de la session** (non négociable) | Pas de cookie, `sessionStorage` uniquement ; D1 limité aux compteurs ; observabilité du Worker désactivée ; référentiel fermé, donc aucune donnée personnelle envoyée à l'IA | ✅ | ✅ avec 2 points à valider avant la mise en ligne (ci-dessous) |
+| **VIII. Données conservées un mois au plus, jamais vendues ni exploitées commercialement** (non négociable) | La fonctionnalité ne collecte rien côté site, ce qui est plus strict que la v3.0.0 : pas de cookie, `sessionStorage` uniquement ; D1 limité aux compteurs anonymes ; observabilité du Worker désactivée ; référentiel fermé, donc aucune donnée personnelle envoyée à l'IA ; conservation standard d'Anthropic de 30 jours, sans ZDR. Aucune page de confidentialité requise tant qu'aucune donnée personnelle n'est collectée | ✅ | ✅ avec 2 points à valider avant la mise en ligne (ci-dessous) |
 
 **Résultat** : aucune violation à justifier.
 
@@ -97,13 +97,17 @@ dans `launch-checklist.md`) :
    emplacement, à cohérence éventuelle, mais ne dit ni s'ils fonctionnent sur `workers.dev` ni
    s'ils sont éphémères ; elle déconseille aussi l'IP comme clé. Points à confirmer sur la
    prévisualisation (voir `launch-checklist.md`).
-2. Conservation par le fournisseur d'IA (research R12, tâche T075) : ZDR demandée à l'équipe
-   commerciale d'Anthropic ; éligibilité du repli serveur à confirmer.
-   **Exception documentée (principe VIII)** : même sous ZDR, Anthropic peut conserver jusqu'à
-   2 ans les entrées et sorties signalées par ses systèmes de sécurité, ou quand la loi l'exige
-   (source : documentation « API et conservation des données », consultée le 2026-11-13). Les
-   données envoyées (occasion, relation, tranche de budget, libellés du référentiel) ne
-   permettent d'identifier personne.
+2. Conservation par le fournisseur d'IA (research R12, tâche T075) : la ZDR n'est plus exigée
+   (constitution v3.0.0). Sans ZDR, « Anthropic supprime automatiquement les entrées et sorties
+   dans les 30 jours suivant leur réception ou leur génération », ce qui respecte la limite d'un
+   mois (source : politique de conservation des données commerciales, consultée le 2026-11-20).
+   La non-réutilisation des données de l'API pour l'entraînement reste à confirmer dans les
+   conditions commerciales (T075). Le repli serveur et les modèles Fable et Mythos (30 jours)
+   sont couverts par la même limite.
+   **Exception documentée (principe VIII)** : Anthropic peut conserver jusqu'à 2 ans les entrées
+   et sorties signalées par ses systèmes de sécurité (7 ans pour les scores de classification),
+   ou quand la loi l'exige, sans durée précisée (même source). Les données envoyées (occasion,
+   relation, tranche de budget, libellés du référentiel) ne permettent d'identifier personne.
 
 ## Project Structure
 
