@@ -216,8 +216,14 @@ Prix de Claude Sonnet 5.5 : 2 $ par million de tokens en entrée, 10 $ en sortie
     « For Anthropic API users, we automatically delete inputs and outputs on our backend within
     30 days of receipt or generation. » Elle respecte la limite d'un mois de la constitution
     v3.0.0, y compris pour le repli serveur et les modèles Fable et Mythos (30 jours). Le repli
-    serveur reste donc en place. Reste à confirmer dans les conditions commerciales que les
-    données de l'API ne servent pas à entraîner les modèles (T075).
+    serveur reste donc en place.
+  - **Entraînement (vérifié le 2026-11-20, T075)** : « By default, we will not use your inputs or
+    outputs from our commercial products » pour entraîner les modèles (Anthropic,
+    [Is my data used for model training?](https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training),
+    mis à jour le 2026-08-18 ; synthèse concordante sur
+    [donneespersonnelles.fr](https://www.donneespersonnelles.fr/claude-ia-rgpd), revue le
+    2026-09-27). Les seules exceptions sont les retours explicites (pouce, signalement de bug)
+    et l'accord explicite du client : le site n'envoie aucun retour et ne donne aucun accord.
   - *Historique (constitution v2.2.0, abandonné)* :
   - Décision initiale : demander la conservation zéro des données (ZDR) à l'équipe commerciale
     d'Anthropic (https://claude.com/contact-sales) pour l'organisation qui porte la clé de
