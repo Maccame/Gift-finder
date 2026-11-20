@@ -27,12 +27,12 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 
 ## Prévisualisation
 
-- [ ] Base D1 `quota` créée et `database_id` reporté dans `wrangler.jsonc` (T077)
-- [ ] Migrations appliquées en distant (T077)
-- [ ] `ANTHROPIC_API_KEY` posée avec `wrangler secret put`, absente du dépôt (T077)
+- [x] Base D1 `quota` créée et `database_id` reporté dans `wrangler.jsonc` (T077)
+- [x] Migrations appliquées en distant : table `quota_counter` présente (T077)
+- [x] `ANTHROPIC_API_KEY` posée avec `wrangler secret put`, absente du dépôt (T077)
 - [ ] Limite de dépense Anthropic à 17 $ par mois et alerte à 12 $ (T077)
 - [ ] Observabilité du Worker désactivée (vérifiée dans le tableau de bord) (T077)
-- [ ] Déploiement `workers.dev` effectué (T077)
+- [x] Déploiement `workers.dev` effectué le 2026-11-20 (version `efdb988f`) : `/` redirige en 302 vers `/fr/`, `/fr/` et `/api/status` répondent 200, aucun `Set-Cookie` (T077)
 
 ## Validation
 
