@@ -1,25 +1,35 @@
 <!--
 Sync Impact Report
-- Version change: 2.1.0 → 2.2.0 (MINEURE : précision d'une règle existante, aucun principe
-  redéfini)
-- Principe modifié : VIII. Aucune donnée conservée au-delà de la session
-  - « ne pas conserver ni réutiliser » est précisé : au-delà du traitement de la requête
-    (ex. conservation zéro des données)
-  - nouvelle règle : seules les conservations qu'un fournisseur ne peut pas exclure par contrat
-    (obligation légale, contenus signalés par ses systèmes de sécurité) sont admises, documentées
-    dans le plan avec leur source et leur durée maximale, et sans donnée identifiante
-- Contexte : même sous ZDR, l'API Anthropic peut conserver jusqu'à 2 ans les contenus signalés
-  ou exigés par la loi (documentation « API et conservation des données », consultée le
-  2026-11-13) ; sans cette précision, aucun fournisseur ne pourrait satisfaire le principe VIII
+- Version change: 2.2.0 → 3.0.0 (MAJEURE : redéfinition incompatible du principe VIII, non
+  négociable)
+- Principe modifié : VIII. « Aucune donnée conservée au-delà de la session » devient
+  « Données conservées un mois au plus, jamais vendues ni exploitées commercialement »
+  - le site PEUT désormais collecter et conserver des données d'utilisateurs (critères, idées
+    générées, journaux techniques, adresse IP), pendant un mois au plus, puis les supprimer
+    automatiquement
+  - les données NE DOIVENT être ni vendues, ni louées, ni cédées, ni utilisées à des fins
+    commerciales (publicité, profilage, prospection, entraînement de modèles)
+  - la conservation zéro des données (ZDR) n'est plus exigée des fournisseurs : ils PEUVENT
+    conserver les données un mois au plus, sans les réutiliser à leurs propres fins
+  - les exceptions qu'un fournisseur ne peut pas exclure (obligation légale, contenus signalés)
+    restent admises si elles sont documentées dans le plan
+  - nouvelles règles : information des utilisateurs (page de confidentialité dans les quatre
+    langues) et exercice des droits RGPD avant toute collecte de donnée personnelle
+  - inchangé : aucun cookie, aucun analytics ni traceur tiers, `sessionStorage` uniquement côté
+    navigateur, minimisation des données envoyées aux tiers
+- Sections modifiées : Contraintes d'exploitation (ligne Confidentialité) ; Workflow de
+  développement (point 3 de la PR)
 - Sections ajoutées : aucune
 - Sections supprimées : aucune
-- Interprétations à confirmer (reprises de la v2.1.0) :
-  - V/VIII : les compteurs agrégés et anonymes (nombre d'appels, coût) ne sont pas des données
-    utilisateur
-  - VIII : une limitation de débit de l'hébergeur à compteurs éphémères vaut limitation « en
-    mémoire, sans persistance »
-- Dépendants : `specs/001-questionnaire-idees-cadeaux/plan.md` (Constitution Check à passer en
-  v2.2.0, exception d'Anthropic documentée) ; `research.md` R12 ; tâche T075
+- Interprétation à confirmer : V/VIII : les compteurs agrégés et anonymes (nombre d'appels, coût)
+  ne sont pas des données utilisateur et ne sont pas soumis à la limite d'un mois
+- Dépendants mis à jour :
+  - `.github/pull_request_template.md` (case du principe VIII, v3.0.0)
+  - `specs/001-questionnaire-idees-cadeaux/plan.md` (Constitution Check v3.0.0, point 2)
+  - `research.md` R11 et R12 (ZDR abandonnée, conservation standard de 30 jours)
+  - `data-model.md` §9, `contracts/llm-output.md`, `quickstart.md`, `launch-checklist.md`
+  - `tasks.md` T075 (plus de demande de ZDR)
+  - `spec.md` FR-029 inchangée : la fonctionnalité 001 reste plus stricte que la constitution
 - TODO différés : aucun
 -->
 
@@ -146,42 +156,51 @@ recommandation orientée par la commission trahirait l'utilisateur.
 **Justification** : une norme mesurable remplace les avis subjectifs sur l'ergonomie par des
 critères vérifiables.
 
-### VIII. Aucune donnée conservée au-delà de la session (NON NÉGOCIABLE)
+### VIII. Données conservées un mois au plus, jamais vendues ni exploitées commercialement (NON NÉGOCIABLE)
 
-- Aucune donnée liée à un utilisateur ne DOIT être conservée après la fin de sa session :
-  ni paramètres saisis, ni idées générées, ni historique, ni adresse IP. Pas de compte ni de
-  base de données d'utilisateurs.
+- Le site PEUT collecter et conserver des données liées aux utilisateurs (ex. paramètres saisis,
+  idées générées, journaux techniques, adresse IP), à condition que chaque donnée collectée soit
+  nécessaire à une finalité documentée dans le plan.
+- Les finalités admises sont le fonctionnement du service, sa sécurité (dont l'anti-abus), la
+  correction d'erreurs et l'amélioration du service.
+- Toute donnée liée à un utilisateur DOIT être supprimée au plus tard un mois (31 jours) après
+  sa collecte. La suppression DOIT être automatique (purge planifiée, durée de vie des journaux,
+  expiration des enregistrements) et vérifiée par un test ou une configuration documentée.
+- Les données NE DOIVENT jamais être vendues, louées, échangées ni cédées, et NE DOIVENT pas être
+  utilisées à des fins commerciales : publicité, profilage, prospection, enrichissement de
+  fichiers, ni entraînement de modèles.
+- Les données ne sont communiquées qu'aux sous-traitants nécessaires au fonctionnement du site
+  (hébergeur, API de génération), dans la limite du strict nécessaire.
+- Avant toute collecte de donnée personnelle, une page de confidentialité, disponible dans les
+  quatre langues (principe III), DOIT indiquer ce qui est collecté, pourquoi, pendant combien de
+  temps et chez quels sous-traitants, et comment demander l'accès à ses données ou leur
+  suppression.
 - Le site NE DOIT déposer aucun cookie, y compris technique.
 - Le stockage côté navigateur est limité à la mémoire et à la durée de la session (ex.
   `sessionStorage`) ; `localStorage`, IndexedDB et tout stockage persistant sont interdits.
-- Le serveur NE DOIT écrire aucun journal de requêtes ou d'utilisateurs, et la journalisation
-  par défaut des hébergeurs et services DOIT être désactivée. Si un service ne permet pas de
-  la désactiver, ce point DOIT être documenté dans le plan et validé par le responsable du
-  projet.
-- Aucun outil d'analytics, de mesure d'audience, pixel ou traceur tiers ne DOIT être intégré.
+- Aucun outil d'analytics tiers, pixel ou traceur tiers ne DOIT être intégré.
 - Les dépendances chargées côté client (polices, CDN, scripts) NE DOIVENT introduire ni traceur
   ni cookie.
 - Les paramètres envoyés à un service tiers (ex. API de génération) DOIVENT se limiter au strict
-  nécessaire, sans donnée identifiante, et les fournisseurs retenus DOIVENT ne pas conserver
-  ni réutiliser ces données au-delà du traitement de la requête (ex. conservation zéro des
-  données).
-- Seules sont admises les conservations qu'un fournisseur ne peut pas exclure par contrat :
-  une obligation légale, ou des contenus signalés par ses systèmes de sécurité. Chacune DOIT
-  être documentée dans le plan, avec sa source et sa durée maximale, et les données envoyées
-  NE DOIVENT permettre d'identifier personne.
-- La limitation de débit par client, si elle est nécessaire, DOIT se faire en mémoire, sans
-  persistance.
+  nécessaire, sans donnée identifiante. Les fournisseurs retenus PEUVENT conserver ces données un
+  mois au plus, et NE DOIVENT ni les vendre ni les réutiliser à leurs propres fins (dont
+  l'entraînement de modèles).
+- Seules sont admises au-delà d'un mois les conservations qu'un fournisseur ne peut pas exclure
+  par contrat : une obligation légale, ou des contenus signalés par ses systèmes de sécurité.
+  Chacune DOIT être documentée dans le plan, avec sa source et sa durée maximale.
 
-**Justification** : ne rien collecter est la seule garantie qu'aucune donnée ne fuite ; la
-conformité RGPD est obtenue sans bannière de consentement.
+**Justification** : une durée courte et une interdiction d'usage commercial limitent le risque
+de fuite et protègent la confiance des utilisateurs, tout en permettant d'exploiter et de
+sécuriser le service ; l'absence de cookie évite la bannière de consentement.
 
 ## Contraintes d'exploitation
 
 - Plafond de coût : 20 € TTC par mois, hébergement, API payantes et nom de domaine compris ; les
   hébergements gratuits ou à faible coût sont privilégiés (principe V).
 - Langues : `fr` (par défaut), `en`, `es`, `de` (principe III).
-- Confidentialité : aucun cookie, aucun journal serveur, aucun analytics, aucune adresse IP ni
-  donnée persistée au-delà de la session (principe VIII).
+- Confidentialité : données d'utilisateurs conservées un mois au plus puis supprimées
+  automatiquement, jamais vendues ni exploitées commercialement ; aucun cookie, aucun analytics
+  ni traceur tiers (principe VIII).
 - Secrets : variables d'environnement ou gestionnaire de secrets, scan automatique, jamais dans
   le dépôt (principe II).
 - Ergonomie : ISO 9241-11, accessibilité comprise (principe VII).
@@ -200,8 +219,9 @@ conformité RGPD est obtenue sans bannière de consentement.
   1. passer l'ensemble des tests automatisés, et contenir leur compte rendu dans sa description
      (principe IV) ;
   2. fournir les textes dans les quatre langues (principe III) ;
-  3. confirmer l'absence de secret, de cookie, de journal, d'analytics et de traceur ajoutés
-     (principes II et VIII) ;
+  3. confirmer l'absence de secret, de cookie, d'analytics et de traceur ajoutés, et, pour toute
+     donnée collectée, sa finalité, sa purge sous un mois et sa mention dans la page de
+     confidentialité (principes II et VIII) ;
   4. confirmer la neutralité de l'affiliation et l'impact budgétaire (principes V et VI) ;
   5. confirmer que les critères d'ergonomie et d'accessibilité de la spec sont vérifiés
      (principe VII).
@@ -223,4 +243,4 @@ conformité RGPD est obtenue sans bannière de consentement.
 - Chaque revue de pull request DOIT vérifier le respect des principes I à VIII ; un écart non
   justifié bloque la fusion.
 
-**Version**: 2.2.0 | **Ratified**: 2026-11-06 | **Last Amended**: 2026-11-13
+**Version**: 3.0.0 | **Ratified**: 2026-11-06 | **Last Amended**: 2026-11-20
