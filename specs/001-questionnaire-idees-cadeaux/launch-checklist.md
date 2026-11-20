@@ -14,7 +14,7 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 - [x] ZDR abandonnée (constitution v3.0.0) : conservation standard d'Anthropic de 30 jours au plus, conforme à la limite d'un mois, repli serveur compris — source consultée le 2026-11-20 (T075)
 - [x] Conditions commerciales d'Anthropic relues : les données de l'API ne servent pas à entraîner les modèles par défaut (privacy.claude.com, mis à jour le 2026-08-18 ; donneespersonnelles.fr) — date : 2026-11-20 (T075)
 - [x] Exception de conservation (jusqu'à 2 ans pour les contenus signalés, ou imposée par la loi) documentée dans `plan.md` avec sa source (T075)
-- [ ] Liaison *Rate Limiting* du Worker vérifiée sur `workers.dev`, compteurs éphémères confirmés (T076)
+- [x] Liaison *Rate Limiting* du Worker vérifiée sur `workers.dev` le 2026-11-20 : **inefficace contre une rafale** (6 requêtes simultanées, puis 7 à 1 s d'intervalle : toutes en 200, aucun 429) ; limite approximative d'après la documentation. Protection partielle acceptée par le porteur tant que l'URL n'est pas diffusée ; la règle au niveau du domaine devient bloquante pour l'ouverture (T076, research R11)
   - Code en place (`SUGGESTIONS_LIMITER`, 5 requêtes par 10 s, clé `CF-Connecting-IP` jamais écrite).
   - Documentation [Rate Limiting](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/)
     consultée le 2026-11-13 : compteurs locaux à chaque emplacement Cloudflare, cohérence éventuelle,
@@ -47,4 +47,4 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 - [ ] **Bloquant** : journaux du Worker désactivés (`"observability": { "enabled": false }` dans `wrangler.jsonc`, redéployé, vérifié dans le tableau de bord), conformément à FR-029 (T080)
 - [ ] **Bloquant** : limite de dépense Anthropic à 17 $ par mois et alerte à 12 $, en remplacement du crédit de test (T080, principe V)
 - [ ] Toutes les cases ci-dessus cochées ; URL diffusée (T080)
-- [ ] Règle de limitation de débit au niveau du domaine, une fois le domaine acheté (T080, research R16)
+- [ ] **Bloquant** : domaine acheté et géré par Cloudflare, règle de limitation de débit au niveau du domaine en place et vérifiée (6 requêtes rapides → refus) ; aucune ouverture publique sur `workers.dev` (T080, research R11 et R16)
