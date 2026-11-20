@@ -101,8 +101,8 @@ dans `launch-checklist.md`) :
    (constitution v3.0.0). Sans ZDR, « Anthropic supprime automatiquement les entrées et sorties
    dans les 30 jours suivant leur réception ou leur génération », ce qui respecte la limite d'un
    mois (source : politique de conservation des données commerciales, consultée le 2026-11-20).
-   La non-réutilisation des données de l'API pour l'entraînement reste à confirmer dans les
-   conditions commerciales (T075). Le repli serveur et les modèles Fable et Mythos (30 jours)
+   Par défaut, Anthropic n'utilise pas les entrées et sorties de ses produits commerciaux, dont
+   l'API, pour entraîner ses modèles (vérifié le 2026-11-20, T075). Le repli serveur et les modèles Fable et Mythos (30 jours)
    sont couverts par la même limite.
    **Exception documentée (principe VIII)** : Anthropic peut conserver jusqu'à 2 ans les entrées
    et sorties signalées par ses systèmes de sécurité (7 ans pour les scores de classification),

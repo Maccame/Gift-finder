@@ -77,7 +77,7 @@ Vérifications complémentaires :
 Elles sont suivies dans `launch-checklist.md` (tâches T075 à T080) :
 
 - Conservation d'Anthropic d'un mois au plus et sans entraînement sur les données de l'API
-  confirmée, exception de conservation documentée dans le plan (research R12, T075).
+  confirmée le 2026-11-20, exception de conservation documentée dans le plan (research R12, T075).
 - Limitation de débit du Worker vérifiée (research R11, T076).
 - Prévisualisation (T077) :
   - `ANTHROPIC_API_KEY` posée avec `wrangler secret put`, absente du dépôt (gitleaks au vert) ;

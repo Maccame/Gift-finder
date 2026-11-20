@@ -12,7 +12,7 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 ## Fournisseurs
 
 - [x] ZDR abandonnée (constitution v3.0.0) : conservation standard d'Anthropic de 30 jours au plus, conforme à la limite d'un mois, repli serveur compris — source consultée le 2026-11-20 (T075)
-- [ ] Conditions commerciales d'Anthropic relues : les données de l'API ne servent pas à entraîner les modèles ni à d'autres fins propres au fournisseur — date : …… (T075)
+- [x] Conditions commerciales d'Anthropic relues : les données de l'API ne servent pas à entraîner les modèles par défaut (privacy.claude.com, mis à jour le 2026-08-18 ; donneespersonnelles.fr) — date : 2026-11-20 (T075)
 - [x] Exception de conservation (jusqu'à 2 ans pour les contenus signalés, ou imposée par la loi) documentée dans `plan.md` avec sa source (T075)
 - [ ] Liaison *Rate Limiting* du Worker vérifiée sur `workers.dev`, compteurs éphémères confirmés (T076)
   - Code en place (`SUGGESTIONS_LIMITER`, 5 requêtes par 10 s, clé `CF-Connecting-IP` jamais écrite).
