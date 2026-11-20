@@ -1,5 +1,5 @@
 // Aucune donnée au-delà de la session (principe VIII, FR-029, SC-009).
-import { expect, test } from "@playwright/test";
+import { expect, test, type Request, type Response } from "@playwright/test";
 import { mockApi } from "./helpers/mock-api";
 import { fillAll, openApp, results, seeIdeas } from "./helpers/flow";
 
@@ -9,15 +9,23 @@ test("aucun cookie, aucun localStorage, aucune requête tierce, rien après ferm
   const page = await context.newPage();
   const foreign: string[] = [];
   const setCookies: string[] = [];
-  page.on("request", (request) => {
+  const onRequest = (request: Request) => {
     const url = new URL(request.url());
     if (!["http:", "https:"].includes(url.protocol)) return;
     if (url.origin !== origin) foreign.push(request.url());
-  });
-  page.on("response", async (response) => {
-    const header = await response.headerValue("set-cookie");
-    if (header) setCookies.push(`${response.url()} → ${header}`);
-  });
+  };
+  // Les lectures d'en-têtes sont asynchrones : on les garde pour les attendre avant de fermer
+  // le contexte, sinon une réponse tardive rejette après la fermeture et fait échouer le test.
+  const pendingHeaders: Promise<void>[] = [];
+  const onResponse = (response: Response) => {
+    pendingHeaders.push(
+      response.headerValue("set-cookie").then((header) => {
+        if (header) setCookies.push(`${response.url()} → ${header}`);
+      }),
+    );
+  };
+  page.on("request", onRequest);
+  page.on("response", onResponse);
 
   await mockApi(page);
   await openApp(page);
@@ -27,6 +35,10 @@ test("aucun cookie, aucun localStorage, aucune requête tierce, rien après ferm
   // Un aller-retour réel par le serveur, sans interception, pour vérifier ses en-têtes.
   await page.goto(`${origin}/`);
   await page.waitForURL(/\/(fr|en|es|de)\/$/);
+  await page.waitForLoadState("networkidle");
+  page.off("request", onRequest);
+  page.off("response", onResponse);
+  await Promise.all(pendingHeaders);
 
   expect(await context.cookies()).toEqual([]);
   expect(await page.evaluate(() => window.localStorage.length)).toBe(0);
