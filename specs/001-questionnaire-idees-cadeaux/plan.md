@@ -108,6 +108,13 @@ dans `launch-checklist.md`) :
    et sorties signalées par ses systèmes de sécurité (7 ans pour les scores de classification),
    ou quand la loi l'exige, sans durée précisée (même source). Les données envoyées (occasion,
    relation, tranche de budget, libellés du référentiel) ne permettent d'identifier personne.
+3. Prévisualisation (T077) : les journaux du Worker sont activés **temporairement**, pour
+   corriger les erreurs pendant les tests, ce qui déroge à FR-029 tant que l'URL n'est pas
+   diffusée. Le principe VIII v3.0.0 l'admet : conservation de 7 jours au plus chez Cloudflare,
+   aucune journalisation des critères ni des réponses par le code. Ils DOIVENT être désactivés
+   avant l'ouverture publique (T080). La dépense est plafonnée pendant les tests par un crédit
+   prépayé de 5 $ sans recharge automatique ; la limite de 17 $ et l'alerte à 12 $ sont à poser
+   avant T080.
 
 ## Project Structure
 

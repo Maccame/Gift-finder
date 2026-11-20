@@ -27,12 +27,12 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 
 ## Prévisualisation
 
-- [ ] Base D1 `quota` créée et `database_id` reporté dans `wrangler.jsonc` (T077)
-- [ ] Migrations appliquées en distant (T077)
-- [ ] `ANTHROPIC_API_KEY` posée avec `wrangler secret put`, absente du dépôt (T077)
-- [ ] Limite de dépense Anthropic à 17 $ par mois et alerte à 12 $ (T077)
-- [ ] Observabilité du Worker désactivée (vérifiée dans le tableau de bord) (T077)
-- [ ] Déploiement `workers.dev` effectué (T077)
+- [x] Base D1 `quota` créée et `database_id` reporté dans `wrangler.jsonc` (T077)
+- [x] Migrations appliquées en distant : table `quota_counter` présente (T077)
+- [x] `ANTHROPIC_API_KEY` posée avec `wrangler secret put`, absente du dépôt (T077)
+- [x] Dépense Anthropic plafonnée pendant les tests par un crédit prépayé de 5 $, recharge automatique désactivée (confirmé le 2026-11-20) (T077)
+- [x] Journaux du Worker activés **temporairement** pour les tests (décision du porteur, 2026-11-20) : conservation de 7 jours au plus chez Cloudflare, aucun `console.log` dans le code, donc ni critères ni réponses journalisés ; `wrangler.jsonc` aligné (`enabled: true`) (T077)
+- [x] Déploiement `workers.dev` effectué le 2026-11-20 (version `efdb988f`) : `/` redirige en 302 vers `/fr/`, `/fr/` et `/api/status` répondent 200, aucun `Set-Cookie` (T077)
 
 ## Validation
 
@@ -44,5 +44,7 @@ L'ouverture publique (T080) n'a lieu que lorsque toutes les cases sont cochées.
 
 ## Ouverture
 
+- [ ] **Bloquant** : journaux du Worker désactivés (`"observability": { "enabled": false }` dans `wrangler.jsonc`, redéployé, vérifié dans le tableau de bord), conformément à FR-029 (T080)
+- [ ] **Bloquant** : limite de dépense Anthropic à 17 $ par mois et alerte à 12 $, en remplacement du crédit de test (T080, principe V)
 - [ ] Toutes les cases ci-dessus cochées ; URL diffusée (T080)
 - [ ] Règle de limitation de débit au niveau du domaine, une fois le domaine acheté (T080, research R16)

@@ -7,8 +7,8 @@
     {
       "binding": "QUOTA_DB",
       "database_name": "quota",
-      // À remplir en T077 après `npx wrangler d1 create quota`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Base créée en T077 (`npx wrangler d1 create quota`).
+      "database_id": "f161adc3-0925-4dc6-aba5-c4ca684aa930",
       "migrations_dir": "migrations"
     }
   ],
@@ -25,8 +25,10 @@
     "QUOTA_DAILY": "30",
     "QUOTA_MONTHLY": "700"
   },
-  // Aucun journal de requêtes (principe VIII).
+  // TEMPORAIRE, prévisualisation uniquement : journaux du Worker activés pour corriger les
+  // erreurs pendant les tests (7 jours de conservation au plus, principe VIII v3.0.0).
+  // Repasser à false avant l'ouverture publique (T080, launch-checklist.md).
   "observability": {
-    "enabled": false
+    "enabled": true
   }
 }
