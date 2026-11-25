@@ -2,7 +2,7 @@
 
 <!-- Ce que change cette PR, et pourquoi. Lien vers la spec ou la tâche (Txxx). -->
 
-## Conformité à la constitution (v3.0.0)
+## Conformité à la constitution (v4.0.0)
 
 - [ ] **I. Une branche par fonctionnalité** : branche dédiée, un commit par tâche, fusion par PR uniquement
 - [ ] **II. Aucun secret dans le dépôt** : aucune clé ni valeur sensible commitée ; gitleaks au vert
@@ -12,6 +12,7 @@
 - [ ] **VI. Neutralité de l'affiliation** : l'ordre des idées ne dépend pas de l'affiliation ; au plus 2 liens affiliés, signalés
 - [ ] **VII. Ergonomie ISO 9241-11** : parcours au clavier, aucune violation axe, chaque erreur propose une action
 - [ ] **VIII. Données conservées un mois au plus** : pas de cookie, pas de `localStorage`, pas d'analytics ni de traceur tiers ; toute donnée collectée a une finalité documentée, une purge automatique sous 31 jours, une mention dans la page de confidentialité, et n'est ni vendue ni exploitée commercialement
+- [ ] **IX. Réponses en champ libre** : longueur courte fixée dans la spec, champ facultatif, texte transmis à la seule API de génération pour la session en cours, absent de tout journal du site (test à l'appui), avertissement article 9 visible avant saisie, filtre de données sensibles testé, renvoi vers la page de confidentialité
 
 ## Impact budgétaire
 
