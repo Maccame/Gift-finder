@@ -91,7 +91,11 @@ Constitution v4.0.0.
 1. **PR dédiée pour la constitution** (principe I et gouvernance) : branche
    `constitution-v4-champs-libres` créée depuis `ee2a0ab`, PR #13 ouverte le 2026-11-27. Une fois
    fusionnée, fusionner `main` dans la branche 002 avant l'implémentation.
-2. **Journaux du Worker** : désactivés par le porteur dans le tableau de bord Cloudflare
+2. **Ordre d'activation du champ** (analyse H1) : `PRIVACY_CONTACT_EMAIL` n'entre dans
+   `wrangler.jsonc` qu'avec la page de confidentialité (T036) ; avant, le champ reste masqué.
+3. **Journaux de test et de CI** (analyse H2) : aucun texte de champ libre, même inventé, n'y est
+   écrit ; les tests ne rapportent que des identifiants de phrases (research R6, point 7).
+4. **Journaux du Worker** : désactivés par le porteur dans le tableau de bord Cloudflare
    (2026-11-27). `wrangler.jsonc` contient encore `"observability": { "enabled": true }` et les
    réactiverait au prochain déploiement : à passer à `false` en début d'implémentation. La
    vérification V7 reste utile si les journaux sont un jour réactivés.

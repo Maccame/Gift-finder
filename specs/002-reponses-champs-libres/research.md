@@ -102,10 +102,14 @@ le champ libre change.
   6. Tests et CI : les tests n'utilisent que des phrases inventées (corpus et marqueurs), jamais un
      texte réel. Les traces, captures et vidéos Playwright sont désactivées pour les fichiers de
      test qui saisissent du texte libre, et le compte rendu de la PR ne contient que des nombres.
-- **Interprétation** : la règle « exclu des journaux de test et de CI » vise le texte des
-  utilisateurs. Les phrases du corpus, inventées et versionnées, apparaissent forcément dans le
-  code des tests et peuvent figurer dans un message d'échec ; elles ne contiennent aucune donnée
-  réelle.
+  7. Aucun texte saisi dans un champ libre, même inventé, n'est écrit dans les journaux de test ou
+     de CI : les tests du corpus comparent des identifiants de phrases (`fr.detect.12`) et
+     n'affichent que ces identifiants en cas d'échec ; les assertions sur un texte libre utilisent
+     des booléens (`expect(body.includes(marker)).toBe(false)`) plutôt que des comparaisons de
+     chaînes qui imprimeraient le texte. Le texte n'existe que dans les fichiers versionnés du
+     dépôt (corpus et code des tests), qui ne sont pas des journaux.
+- **Décision du 2026-11-27** : application stricte du principe IX aux journaux de test et de CI,
+  sans exception pour les phrases inventées (analyse, point H2).
 
 ## R7. Détection pendant la saisie
 
@@ -126,7 +130,8 @@ le champ libre change.
   n'y a pas d'adresse du type `contact@domaine`.
 - **Décision** :
   - L'adresse est lue dans une variable d'environnement, `PRIVACY_CONTACT_EMAIL`, et affichée
-    sur la page de confidentialité. Adresse fournie le 2026-11-27 : **`find-my-kdo@proton.me`**,
+    sur la page de confidentialité. Elle n'est ajoutée à `wrangler.jsonc` qu'**avec** la page de
+    confidentialité (même tâche), pour qu'aucun déploiement n'affiche le champ sans la page. Adresse fournie le 2026-11-27 : **`find-my-kdo@proton.me`**,
     boîte gratuite dédiée au projet, temporaire jusqu'à l'achat du domaine. Publique par nature
     et non secrète, elle est versionnée dans les `vars` de `wrangler.jsonc` (principe II non
     concerné).
@@ -159,6 +164,9 @@ le champ libre change.
 - **Décision** : une page Astro par langue, `/{locale}/confidentialite/` (même chemin dans les
   quatre langues, pour simplifier les liens), rendue côté serveur pour lire
   `PRIVACY_CONTACT_EMAIL`. Lien dans le pied de page de toutes les pages et à côté du champ libre.
+  - Sous-traitants nommés (principe VIII) : Anthropic (génération des idées, 30 jours au plus,
+    exception documentée) et Cloudflare (hébergement ; l'IP sert de clé à la limitation de débit
+    le temps de la requête, sans écriture ni journal, journaux du Worker désactivés).
   - Le lien du champ libre ouvre la page dans un nouvel onglet ; les réponses sont de toute façon
     copiées dans le `sessionStorage` à chaque frappe, donc rien n'est perdu (FR-019).
   - Contenu exigé par FR-018 et FR-018a, rédigé dans les quatre langues, sans cookie ni script
