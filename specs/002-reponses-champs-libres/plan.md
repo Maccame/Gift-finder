@@ -75,7 +75,7 @@ Constitution v4.0.0.
 | Principe | Vérification | Avant phase 0 | Après phase 1 |
 |---|---|---|---|
 | **I. Une branche par fonctionnalité** | Branche dédiée, un commit par tâche, fusion par PR | ⚠️ la branche porte aussi l'amendement de la constitution, que la gouvernance veut dans une PR dédiée | ⚠️ à régler avant l'implémentation (point 1 ci-dessous) |
-| **II. Aucun secret dans le dépôt** (non négociable) | `PRIVACY_CONTACT_EMAIL` hors du dépôt (`.dev.vars`, variable du Worker) ; nom ajouté à `.dev.vars.example` sans valeur ; gitleaks inchangé | ✅ | ✅ (research R8) |
+| **II. Aucun secret dans le dépôt** (non négociable) | `PRIVACY_CONTACT_EMAIL` est une adresse publique, pas un secret : versionnée dans les `vars` de `wrangler.jsonc` ; gitleaks inchangé | ✅ | ✅ (research R8) |
 | **III. Web first et multilingue** | Libellé, exemple, compteur, avertissement, messages du filtre, noms de catégories et page de confidentialité dans les 4 langues ; listes du filtre dans les 4 langues ; test de complétude des clés étendu | ✅ | ✅ (research R2, R10) |
 | **IV. Tests automatisés et compte rendu** (non négociable) | Corpus du filtre, garantie serveur, absence de journalisation, parcours de bout en bout ; IA toujours simulée | ✅ | ✅ (quickstart V1 à V6) |
 | **V. Budget plafonné à 20 €** | +150 tokens d'entrée par recherche au plus : 16,50 € par mois au maximum, quotas inchangés ; filtre sans coût ; boîte de contact gratuite | ✅ | ✅ (research R5) |
@@ -88,20 +88,18 @@ Constitution v4.0.0.
 
 **Points à régler** :
 
-1. **PR dédiée pour la constitution** (principe I et gouvernance) : l'amendement v4.0.0 (commit
-   `ee2a0ab`) est sur la même branche que la spec 002. Avant l'implémentation, ouvrir une PR qui
-   ne contient que ce commit (par exemple une branche `constitution-v4-champs-libres` créée depuis
-   `ee2a0ab`), la fusionner, puis fusionner `main` dans la branche 002, comme pour la 001.
-2. **Journaux du Worker en prévisualisation** : ils sont activés temporairement depuis la 001
-   (T077). Ils n'enregistrent pas le corps des requêtes, donc pas le texte libre, mais ce point
-   doit être vérifié sur la prévisualisation (quickstart V7) avant de faire essayer le champ à
-   quiconque. Leur désactivation reste bloquante pour l'ouverture publique (launch-checklist 001,
-   T080).
+1. **PR dédiée pour la constitution** (principe I et gouvernance) : branche
+   `constitution-v4-champs-libres` créée depuis `ee2a0ab`, PR #13 ouverte le 2026-11-27. Une fois
+   fusionnée, fusionner `main` dans la branche 002 avant l'implémentation.
+2. **Journaux du Worker** : désactivés par le porteur dans le tableau de bord Cloudflare
+   (2026-11-27). `wrangler.jsonc` contient encore `"observability": { "enabled": true }` et les
+   réactiverait au prochain déploiement : à passer à `false` en début d'implémentation. La
+   vérification V7 reste utile si les journaux sont un jour réactivés.
 
 **Avant l'ouverture au public** (à ajouter à la liste de lancement) :
 
-- adresse de contact dédiée créée et posée dans `PRIVACY_CONTACT_EMAIL` ; sans elle, le site
-  fonctionne mais sans champ libre (research R8) ;
+- adresse de contact `find-my-kdo@proton.me` posée dans `PRIVACY_CONTACT_EMAIL` et vérifiée par
+  un envoi de test (research R8) ;
 - page de confidentialité relue dans les quatre langues ;
 - vérification V7 faite.
 
@@ -150,6 +148,7 @@ src/
 │   ├── types.ts                      ~ Criteria.aboutText, SensitiveCategory
 │   └── generation/prompt.ts          ~ aboutRecipient et phrase de consigne
 ├── data/sensitive-terms.json         + listes et exclusions, 4 langues
+wrangler.jsonc (à la racine)          ~ PRIVACY_CONTACT_EMAIL dans vars ; observability à false
 ├── i18n/{fr,en,es,de}.json           ~ textes du champ, du filtre et de la confidentialité
 └── layouts/Base.astro                ~ lien vers la confidentialité dans le pied de page
 
@@ -166,7 +165,6 @@ tests/
 │   └── us-privacy-page.spec.ts       + US3, 4 langues
 └── fixtures/sensitive-corpus/        + fr.json, en.json, es.json, de.json
 
-.dev.vars.example                     ~ PRIVACY_CONTACT_EMAIL sans valeur
 ```
 
 **Structure Decision** : on garde le projet Astro unique de la 001. Le filtre et la

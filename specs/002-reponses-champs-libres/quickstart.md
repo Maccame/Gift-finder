@@ -5,8 +5,8 @@
 ## Prérequis
 
 - Installation et commandes de la 001 (`npm install`, `npm run dev`, `npm run test:all`).
-- Dans `.dev.vars` (non versionné) : `PRIVACY_CONTACT_EMAIL=contact@example.invalid`. Sans
-  cette variable, le champ libre n'apparaît pas (research R8).
+- `PRIVACY_CONTACT_EMAIL` vient des `vars` de `wrangler.jsonc` (`find-my-kdo@proton.me`). Pour
+  V6, la vider le temps de l'essai dans `.dev.vars` (`PRIVACY_CONTACT_EMAIL=`), non versionné.
 - Tous les appels à l'API Anthropic restent simulés en test (principe IV).
 
 ## Scénarios

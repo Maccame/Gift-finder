@@ -125,16 +125,17 @@ le champ libre change.
   servi en prévisualisation sur `….workers.dev` (plan 001, research R2 et R16). Sans domaine, il
   n'y a pas d'adresse du type `contact@domaine`.
 - **Décision** :
-  - L'adresse est lue dans une variable d'environnement, `PRIVACY_CONTACT_EMAIL`, non versionnée
-    (posée avec `wrangler secret put` ou `wrangler deploy --var`), et affichée sur la page de
-    confidentialité.
+  - L'adresse est lue dans une variable d'environnement, `PRIVACY_CONTACT_EMAIL`, et affichée
+    sur la page de confidentialité. Adresse fournie le 2026-11-27 : **`find-my-kdo@proton.me`**,
+    boîte gratuite dédiée au projet, temporaire jusqu'à l'achat du domaine. Publique par nature
+    et non secrète, elle est versionnée dans les `vars` de `wrangler.jsonc` (principe II non
+    concerné).
   - **Tant que la variable est vide, le champ libre n'est pas affiché** et le serveur refuse le
     champ `aboutText` : aucune donnée personnelle n'est collectée avant que la page de
     confidentialité soit complète (principe VIII). Le reste du site fonctionne comme la 001.
-  - En local et en CI, une adresse factice (`contact@example.invalid`) est utilisée.
-  - Recommandation : créer dès maintenant une boîte gratuite dédiée au projet (ex. Proton Mail ou
-    Gmail), sans domaine, puis la remplacer par une adresse du domaine quand il sera acheté ; seul
-    le contenu de la variable change.
+  - Les tests fixent la variable eux-mêmes (adresse factice `contact@example.invalid`, ou vide
+    pour vérifier la désactivation).
+  - Quand le domaine sera acheté, seule la valeur de la variable change.
 - **Justification** : le développement et les tests avancent sans attendre le domaine, et la
   règle « page de confidentialité avant toute collecte » est garantie par le code, pas seulement
   par une liste de contrôle.
