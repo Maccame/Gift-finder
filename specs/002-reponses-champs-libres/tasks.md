@@ -51,7 +51,7 @@ Un seul projet Astro à la racine du dépôt (voir [plan.md](./plan.md), Project
 
 **Purpose**: aligner la branche sur `main` et la configuration du Worker
 
-- [ ] T001 Vérifier que la PR #13 (constitution v4.0.0, branche `constitution-v4-champs-libres`) est fusionnée dans `main`, puis fusionner `main` dans `002-constitution-champs-libres` ; contrôler que `.specify/memory/constitution.md` affiche la version 4.0.0
+- [X] T001 Vérifier que la PR #13 (constitution v4.0.0, branche `constitution-v4-champs-libres`) est fusionnée dans `main`, puis fusionner `main` dans `002-constitution-champs-libres` ; contrôler que `.specify/memory/constitution.md` affiche la version 4.0.0
 - [ ] T002 Dans `wrangler.jsonc` : passer `"observability": { "enabled": false }` et remplacer le commentaire « TEMPORAIRE » par « désactivé (principe IX, 2026-11-27) » ; ajouter `"PRIVACY_CONTACT_EMAIL": "find-my-kdo@proton.me"` dans `vars` avec le commentaire « adresse publique de contact RGPD, temporaire jusqu'au domaine (research R8) »
 - [ ] T003 [P] Dans `src/env.d.ts`, ajouter `PRIVACY_CONTACT_EMAIL?: string` à `Cloudflare.Env`
 - [ ] T004 [P] Dans `tests/unit/stubs/cloudflare-workers.ts`, exposer `PRIVACY_CONTACT_EMAIL: "contact@example.invalid"` dans l'objet `env` simulé, modifiable par test

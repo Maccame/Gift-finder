@@ -25,10 +25,8 @@
     "QUOTA_DAILY": "30",
     "QUOTA_MONTHLY": "700"
   },
-  // TEMPORAIRE, prévisualisation uniquement : journaux du Worker activés pour corriger les
-  // erreurs pendant les tests (7 jours de conservation au plus, principe VIII v3.0.0).
-  // Repasser à false avant l'ouverture publique (T080, launch-checklist.md).
+  // désactivé (principe IX, 2026-11-27)
   "observability": {
-    "enabled": true
+    "enabled": false
   }
 }
