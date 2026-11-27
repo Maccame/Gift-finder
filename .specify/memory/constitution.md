@@ -1,35 +1,29 @@
 <!--
 Sync Impact Report
-- Version change: 2.2.0 → 3.0.0 (MAJEURE : redéfinition incompatible du principe VIII, non
-  négociable)
-- Principe modifié : VIII. « Aucune donnée conservée au-delà de la session » devient
-  « Données conservées un mois au plus, jamais vendues ni exploitées commercialement »
-  - le site PEUT désormais collecter et conserver des données d'utilisateurs (critères, idées
-    générées, journaux techniques, adresse IP), pendant un mois au plus, puis les supprimer
-    automatiquement
-  - les données NE DOIVENT être ni vendues, ni louées, ni cédées, ni utilisées à des fins
-    commerciales (publicité, profilage, prospection, entraînement de modèles)
-  - la conservation zéro des données (ZDR) n'est plus exigée des fournisseurs : ils PEUVENT
-    conserver les données un mois au plus, sans les réutiliser à leurs propres fins
-  - les exceptions qu'un fournisseur ne peut pas exclure (obligation légale, contenus signalés)
-    restent admises si elles sont documentées dans le plan
-  - nouvelles règles : information des utilisateurs (page de confidentialité dans les quatre
-    langues) et exercice des droits RGPD avant toute collecte de donnée personnelle
-  - inchangé : aucun cookie, aucun analytics ni traceur tiers, `sessionStorage` uniquement côté
-    navigateur, minimisation des données envoyées aux tiers
+- Version change: 3.0.0 → 4.0.0 (MAJEURE, choix du responsable du projet : un nouveau principe
+  non négociable IX déroge au principe VIII, non négociable lui aussi, pour les réponses en champ
+  libre ; la seule règle de versionnage aurait donné une MINEURE, l'ajout d'un principe)
+- Principe ajouté : IX. Réponses en champ libre, courtes, facultatives et à finalité unique
+  (NON NÉGOCIABLE)
+  - texte libre pouvant contenir des données personnelles, longueur courte fixée dans la spec
+  - champs facultatifs, pouvant être passés
+  - transmission à la seule API de génération, pour la seule session en cours ; aucune
+    conservation côté serveur ni réutilisation
+  - exclusion de tout journal du site (Worker, erreurs, tests, CI), vérifiée par un test ;
+    conservation admise dans les journaux du fournisseur de l'API (règle des fournisseurs)
+  - avertissement article 9 RGPD avant saisie, filtre automatique défini et testé dans la spec,
+    reconnu imparfait
+  - cas du tiers (destinataire du cadeau) assumé, renvoi vers la page de confidentialité
+- Principe modifié : VIII (titre inchangé), renvoi vers le principe IX pour les champs libres
 - Sections modifiées : Contraintes d'exploitation (ligne Confidentialité) ; Workflow de
-  développement (point 3 de la PR)
-- Sections ajoutées : aucune
+  développement (point 3 de la PR) ; Governance (revue des principes I à IX)
 - Sections supprimées : aucune
-- Interprétation à confirmer : V/VIII : les compteurs agrégés et anonymes (nombre d'appels, coût)
-  ne sont pas des données utilisateur et ne sont pas soumis à la limite d'un mois
+- Interprétation à confirmer : une réponse détectée par le filtre n'est pas transmise telle
+  quelle ; le comportement exact (refus avec message, retrait du passage) est fixé par la spec
 - Dépendants mis à jour :
-  - `.github/pull_request_template.md` (case du principe VIII, v3.0.0)
-  - `specs/001-questionnaire-idees-cadeaux/plan.md` (Constitution Check v3.0.0, point 2)
-  - `research.md` R11 et R12 (ZDR abandonnée, conservation standard de 30 jours)
-  - `data-model.md` §9, `contracts/llm-output.md`, `quickstart.md`, `launch-checklist.md`
-  - `tasks.md` T075 (plus de demande de ZDR)
-  - `spec.md` FR-029 inchangée : la fonctionnalité 001 reste plus stricte que la constitution
+  - `.github/pull_request_template.md` (v4.0.0, case du principe IX)
+  - à venir : page de confidentialité (quatre langues) dans la fonctionnalité 002
+  - `specs/001-questionnaire-idees-cadeaux` : aucun champ libre, conforme sans changement
 - TODO différés : aucun
 -->
 
@@ -188,10 +182,52 @@ critères vérifiables.
 - Seules sont admises au-delà d'un mois les conservations qu'un fournisseur ne peut pas exclure
   par contrat : une obligation légale, ou des contenus signalés par ses systèmes de sécurité.
   Chacune DOIT être documentée dans le plan, avec sa source et sa durée maximale.
+- Les réponses saisies en champ libre relèvent du principe IX, qui précise ou remplace
+  certaines règles de ce principe pour ces seules réponses ; toutes les autres règles du
+  principe VIII continuent de s'y appliquer.
 
 **Justification** : une durée courte et une interdiction d'usage commercial limitent le risque
 de fuite et protègent la confiance des utilisateurs, tout en permettant d'exploiter et de
 sécuriser le service ; l'absence de cookie évite la bannière de consentement.
+
+### IX. Réponses en champ libre, courtes, facultatives et à finalité unique (NON NÉGOCIABLE)
+
+- Le principe VIII s'applique aux réponses saisies en texte libre, sauf sur les points ci-dessous,
+  qui le complètent ou le remplacent pour ces seules réponses.
+- Un champ libre PEUT recevoir du texte contenant des données personnelles, par dérogation à la
+  règle « sans donnée identifiante » applicable aux paramètres envoyés à un tiers.
+- La longueur de chaque champ libre DOIT être limitée à une valeur courte, fixée dans la spec et
+  appliquée côté navigateur et côté serveur.
+- Chaque champ libre DOIT être facultatif : l'utilisateur PEUT le passer sans perdre l'accès aux
+  idées cadeaux.
+- Le texte d'un champ libre NE DOIT être transmis qu'à l'API de génération, et uniquement pour
+  personnaliser les idées cadeaux de la session en cours. Il NE DOIT être ni conservé côté
+  serveur (base, cache, file d'attente), ni réutilisé pour une autre session, ni utilisé pour
+  la sécurité, la correction d'erreurs ou l'amélioration du service.
+- Le texte d'un champ libre DOIT être exclu de tout journal produit par le site : journaux et
+  traces du Worker, rapports d'erreurs, journaux de test et de CI. Un test automatisé DOIT le
+  vérifier.
+- Le texte PEUT être conservé dans les journaux du fournisseur de l'API de génération, sur
+  lesquels le site n'a pas la main ; cette conservation reste soumise à la règle des fournisseurs
+  ci-dessus (un mois au plus, exceptions documentées dans le plan) et DOIT figurer dans la page
+  de confidentialité.
+- Avant toute saisie, un avertissement visible DOIT demander de ne pas saisir de données
+  sensibles au sens de l'article 9 du RGPD (santé, origine, opinions politiques, convictions
+  religieuses ou philosophiques, appartenance syndicale, données génétiques ou biométriques,
+  vie ou orientation sexuelle).
+- Avant transmission, chaque réponse DOIT passer un filtre automatique de données sensibles.
+  Les cas couverts par le filtre et le comportement en cas de détection DOIVENT être définis dans
+  la spec et vérifiés par des tests automatisés ; une réponse détectée NE DOIT pas être
+  transmise telle quelle. Le filtre est reconnu imparfait : l'avertissement et la finalité
+  limitée couvrent les cas qu'il ne détecte pas.
+- Les réponses PEUVENT porter sur un tiers, la personne à qui le cadeau est destiné, qui n'est
+  pas utilisatrice du site. Ce cas est assumé : l'interface DOIT renvoyer, à proximité des champs
+  libres, vers la page de confidentialité, qui DOIT décrire ce traitement.
+
+**Justification** : les champs libres permettent une saisie plus riche et des idées cadeaux plus
+ciblées ; ils exigent une vigilance accrue sur les données personnelles, compensée par une
+longueur courte, le caractère facultatif, une finalité unique, l'absence de journalisation par
+le site, l'avertissement préalable et le filtre de données sensibles.
 
 ## Contraintes d'exploitation
 
@@ -200,7 +236,8 @@ sécuriser le service ; l'absence de cookie évite la bannière de consentement.
 - Langues : `fr` (par défaut), `en`, `es`, `de` (principe III).
 - Confidentialité : données d'utilisateurs conservées un mois au plus puis supprimées
   automatiquement, jamais vendues ni exploitées commercialement ; aucun cookie, aucun analytics
-  ni traceur tiers (principe VIII).
+  ni traceur tiers ; réponses en champ libre courtes, facultatives, transmises à la seule API de
+  génération pour la session en cours, jamais journalisées par le site (principes VIII et IX).
 - Secrets : variables d'environnement ou gestionnaire de secrets, scan automatique, jamais dans
   le dépôt (principe II).
 - Ergonomie : ISO 9241-11, accessibilité comprise (principe VII).
@@ -221,7 +258,9 @@ sécuriser le service ; l'absence de cookie évite la bannière de consentement.
   2. fournir les textes dans les quatre langues (principe III) ;
   3. confirmer l'absence de secret, de cookie, d'analytics et de traceur ajoutés, et, pour toute
      donnée collectée, sa finalité, sa purge sous un mois et sa mention dans la page de
-     confidentialité (principes II et VIII) ;
+     confidentialité ; pour tout champ libre, sa limite de longueur, son caractère facultatif,
+     son absence des journaux, l'avertissement article 9 et les tests du filtre de données
+     sensibles (principes II, VIII et IX) ;
   4. confirmer la neutralité de l'affiliation et l'impact budgétaire (principes V et VI) ;
   5. confirmer que les critères d'ergonomie et d'accessibilité de la spec sont vérifiés
      (principe VII).
@@ -240,7 +279,7 @@ sécuriser le service ; l'absence de cookie évite la bannière de consentement.
   - CORRECTIF : clarification, reformulation ou correction sans changement de sens.
 - Chaque plan d'implémentation DOIT vérifier la conformité à cette constitution ; toute
   dérogation DOIT être justifiée explicitement et approuvée.
-- Chaque revue de pull request DOIT vérifier le respect des principes I à VIII ; un écart non
+- Chaque revue de pull request DOIT vérifier le respect des principes I à IX ; un écart non
   justifié bloque la fusion.
 
-**Version**: 3.0.0 | **Ratified**: 2026-11-06 | **Last Amended**: 2026-11-20
+**Version**: 4.0.0 | **Ratified**: 2026-11-06 | **Last Amended**: 2026-11-25
