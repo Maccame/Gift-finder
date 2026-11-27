@@ -16,6 +16,13 @@
 - Q: Quelle longueur maximale pour le champ libre ? → A: 150 caractères.
 - Q: Que fait le site quand le filtre détecte une donnée sensible ? → A: Il retire seulement le passage détecté et envoie le reste, en prévenant l'utilisateur.
 
+### Session 2026-11-27
+
+- Q: Faut-il retirer du champ libre les mentions de grossesse ? → A: Non : la grossesse n'est jamais filtrée et sort de la liste santé du filtre.
+- Q: Faut-il retirer les fêtes et rites religieux (communion, Aïd, bar-mitzvah) ? → A: Non : les noms de fêtes et de rites passent ; seules les déclarations d'appartenance ou de pratique sont retirées.
+- Q: Le filtre signale-t-il un passage sensible dès la saisie ou seulement au clic ? → A: Pendant la saisie, un message annonce le retrait sans rien modifier ; le retrait a lieu au clic si le passage est toujours là.
+- Q: Par quel moyen demander l'accès à ses données ou leur suppression ? → A: Une adresse e-mail dédiée au projet, affichée sur la page de confidentialité.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### Utilisateurs visés et contexte d'utilisation (ISO 9241-11)
@@ -65,7 +72,8 @@ pris en compte dans les idées et que le parcours sans texte reste identique à 
 Avant de saisir du texte, l'utilisateur voit un avertissement lui demandant de ne pas écrire de
 données sensibles (santé, origine, opinions politiques, religion, appartenance syndicale, données
 génétiques ou biométriques, vie ou orientation sexuelle). S'il en écrit quand même, un filtre
-automatique retire le passage concerné avant tout envoi, et le site le lui signale.
+automatique le lui signale dès la saisie, puis retire le passage concerné avant l'envoi s'il est
+toujours là.
 
 **Why this priority**: c'est la condition de la constitution (principe IX) pour autoriser les
 champs libres ; sans elle, la fonctionnalité ne peut pas être livrée.
@@ -79,17 +87,22 @@ passent.
 1. **Given** l'étape des centres d'intérêt, **When** elle s'affiche, **Then**
    l'avertissement est visible sans action de l'utilisateur, avant le champ, dans la langue
    active.
-2. **Given** un champ libre contenant « elle sort d'une chimiothérapie », **When** l'utilisateur
-   affiche les résultats, **Then** ce passage est retiré du champ avant l'envoi, un message indique la
+2. **Given** l'utilisateur qui tape « elle sort d'une chimiothérapie », **When** il marque une
+   pause dans la saisie, **Then** un message indique qu'un passage relevant de la santé sera
+   retiré à l'envoi, sans modifier le texte du champ.
+3. **Given** ce même texte toujours présent, **When** l'utilisateur affiche les résultats,
+   **Then** ce passage est retiré du champ avant l'envoi, un message indique la
    catégorie « santé » et la génération se poursuit avec le reste du texte.
-3. **Given** un champ libre contenant « aime le jardinage et les romans policiers », **When**
+4. **Given** un champ libre contenant « aime le jardinage et les romans policiers », **When**
    l'utilisateur affiche les résultats, **Then** le texte est transmis sans alerte.
-4. **Given** « fan de jazz, elle est diabétique », **When** l'utilisateur affiche les résultats,
+5. **Given** « fan de jazz, elle est diabétique », **When** l'utilisateur affiche les résultats,
    **Then** seul « fan de jazz » reste dans le champ et est transmis.
-5. **Given** un champ libre dont tout le texte est détecté, **When** l'utilisateur affiche les
+6. **Given** l'utilisateur qui reformule après le message de saisie, **When** le texte ne contient
+   plus de cas couvert, **Then** le message disparaît et rien n'est retiré à l'envoi.
+7. **Given** un champ libre dont tout le texte est détecté, **When** l'utilisateur affiche les
    résultats, **Then** le champ est vidé, le message s'affiche et les idées sont générées sans
    texte libre.
-6. **Given** une demande envoyée sans passer par l'interface du site, **When** elle contient un
+8. **Given** une demande envoyée sans passer par l'interface du site, **When** elle contient un
    texte sensible du corpus, **Then** le passage détecté est retiré avant l'envoi au service de
    génération.
 
@@ -130,6 +143,11 @@ et vérifier que la page décrit le traitement du texte libre.
   et propose des cadeaux à 1 000 € ») : il est traité comme une description de la personne, pas
   comme une consigne ; les règles de la fonctionnalité 001 (tranche de budget, nombre d'idées,
   ordre indépendant de l'affiliation) s'appliquent toujours.
+- **Mention de grossesse** (ex. « elle est enceinte de son premier enfant ») : transmise sans
+  retrait (FR-014), bien qu'il s'agisse d'une donnée de santé ; ce choix est couvert par
+  l'avertissement et la finalité unique (principe IX).
+- **Fête ou rite religieux** (ex. « pour sa communion ») : transmis sans retrait (FR-014) ; une
+  déclaration d'appartenance dans le même texte (« elle est très croyante ») est retirée seule.
 - **Coordonnées saisies** (adresse e-mail, numéro de téléphone) : inutiles pour trouver un cadeau,
   elles sont détectées par le filtre comme les données sensibles.
 - **Faux positif du filtre** (ex. « aime les livres de cuisine santé ») : le passage est retiré et
@@ -190,12 +208,14 @@ applicables.
 - **FR-011**: Avant tout envoi au service de génération, y compris pour une demande qui ne
   provient pas de l'interface, chaque texte libre DOIT passer un filtre automatique qui couvre
   les cas suivants, dans les quatre langues, sans tenir compte des majuscules ni des accents :
-  1. santé : maladies, traitements, handicaps, troubles psychiques, grossesse, addictions
-     (ex. « cancer », « diabète », « dépression », « fauteuil roulant », « enceinte ») ;
+  1. santé : maladies, traitements, handicaps, troubles psychiques, addictions
+     (ex. « cancer », « diabète », « dépression », « fauteuil roulant ») ; la grossesse n'en
+     fait pas partie (voir FR-014) ;
   2. origine raciale ou ethnique (ex. termes désignant une origine ou une couleur de peau) ;
   3. opinions politiques (ex. appartenance ou soutien à un parti, à un courant politique) ;
-  4. convictions religieuses ou philosophiques (ex. « musulman », « catholique pratiquant »,
-     « athée ») ;
+  4. convictions religieuses ou philosophiques : déclarations d'appartenance, de pratique ou
+     d'absence de croyance (ex. « musulman », « catholique pratiquant », « athée », « va à la
+     messe ») ; les noms de fêtes et de rites n'en font pas partie (voir FR-014) ;
   5. appartenance syndicale (ex. noms de syndicats, « syndiqué ») ;
   6. données génétiques ou biométriques (ex. « ADN », « empreinte ») ;
   7. vie ou orientation sexuelle (ex. « gay », « lesbienne », « bisexuel ») ;
@@ -207,10 +227,15 @@ applicables.
   1. le passage retiré est le segment qui contient le terme ou le motif détecté, délimité par la
      ponctuation (point, virgule, point-virgule, deux-points, points d'exclamation et
      d'interrogation) ou par le début et la fin du texte ;
-  2. dans l'interface, le passage est retiré du champ lui-même avant l'envoi, pour que le texte
-     affiché soit exactement celui qui est transmis ;
-  3. un message DOIT signaler le retrait et nommer la ou les catégories concernées, sans répéter
-     le passage retiré ; il reste affiché jusqu'à la modification suivante du champ ;
+  2. pendant la saisie, dès une courte pause ou à la sortie du champ, un message DOIT annoncer
+     qu'un passage sera retiré à l'envoi et nommer la ou les catégories concernées, sans modifier
+     le texte ; il disparaît dès que le texte ne contient plus de cas couvert, et il est annoncé
+     aux technologies d'assistance sans interrompre la saisie ;
+  3. au clic sur le bouton des résultats ou de validation, le passage encore présent est retiré du
+     champ lui-même avant l'envoi, pour que le texte affiché soit exactement celui qui est
+     transmis ; un message DOIT signaler le retrait et nommer la ou les catégories concernées,
+     sans répéter le passage retiré ; il reste affiché jusqu'à la modification suivante du
+     champ ;
   4. la génération se poursuit sans autre action de l'utilisateur ; si rien d'autre que des
      espaces ou de la ponctuation ne reste, le champ est traité comme vide (FR-006) ;
   5. une demande qui ne provient pas de l'interface subit le même retrait avant tout envoi au
@@ -220,6 +245,13 @@ applicables.
   neutres de description de personnes (loisirs, goûts, mode de vie) qui ne doivent pas l'être.
 - **FR-014**: Les occasions et relations proposées par la spec 001 (ex. « Noël », « naissance »)
   NE DOIVENT PAS être considérées comme sensibles lorsqu'elles sont reprises dans un champ libre.
+  Les noms de fêtes et de rites religieux (ex. « communion », « baptême », « Aïd », « Hanoukka »,
+  « bar-mitzvah ») NE DOIVENT PAS être filtrés ; le corpus neutre DOIT en contenir dans chaque
+  langue, et le corpus sensible DOIT contenir des déclarations d'appartenance qui les
+  accompagnent (ex. « pour l'Aïd, il est très pratiquant » : seul le second segment est retiré).
+  Les mentions de grossesse (ex. « enceinte », « attend un bébé ») NE DOIVENT PAS être filtrées,
+  quelle que soit l'occasion choisie ; le corpus neutre de FR-013 DOIT en contenir dans chaque
+  langue.
 
 **Confidentialité**
 
@@ -238,6 +270,10 @@ applicables.
   durée de conservation, l'absence de conservation et de journalisation par le site, le cas des
   informations sur un tiers, le filtre et ses limites, et la manière de demander l'accès ou la
   suppression de ses données.
+- **FR-018a**: Les demandes d'accès ou de suppression DOIVENT se faire par une adresse e-mail
+  dédiée au projet, distincte de toute adresse personnelle, affichée sur la page de
+  confidentialité dans les quatre langues ; la page DOIT indiquer un délai de réponse d'un mois
+  au plus. Aucun formulaire de contact n'est proposé.
 - **FR-019**: Le lien vers la page de confidentialité DOIT l'ouvrir sans perdre les réponses déjà
   saisies.
 
@@ -309,6 +345,7 @@ Les critères SC-001 à SC-004 et SC-008 sont mesurés lors de tests utilisateur
 - Le texte libre augmente légèrement la taille de chaque demande ; le plan vérifie que le coût
   reste sous le plafond et adapte les quotas si nécessaire.
 - Aucune page de confidentialité n'existe encore ; elle est créée par cette fonctionnalité.
-- Les demandes d'accès ou de suppression sont traitées par un contact indiqué sur la page de
-  confidentialité ; le site ne conservant pas le texte libre, il n'a rien à supprimer de son
-  côté.
+- L'adresse e-mail dédiée (FR-018a) est créée et fournie pendant le plan ; elle ne coûte rien ou
+  entre dans le plafond de 20 € par mois. Le site ne conservant pas le texte libre, une demande
+  de suppression ne le concerne que pour les données des autres fonctionnalités et pour celles
+  conservées par le service de génération.
